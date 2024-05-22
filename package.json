@@ -1,5 +1,10 @@
 {
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
-    "express": "^4.19.2"
+    "@types/mocha": "^10.0.6",
+    "express": "^4.19.2",
+    "mocha": "^10.4.0"
   }
 }
