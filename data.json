@@ -9,7 +9,7 @@
       "Rafid"
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
-    "image": "",
+    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
     "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
     "cohort": "Spring 2024",
     "topic": ["AI", "ML"]
