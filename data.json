@@ -13,5 +13,20 @@
     "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
     "cohort": "Spring 2024",
     "topic": ["AI", "ML"]
+  },
+  {
+    "name": "Testing",
+    "short-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game that can in turn yield high reward, thus enabling for exploitation of the game and yielding better gaming performance.",
+    "long-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game. The algorithms enable the agent to identify high-reward moves, thus improving performance through exploitation. The game is built with Tkinter, and is then controlled by the 2048AIAgent through array selection. To train the agent to make predictions for the next best move, each game calculates a Q-value determined by its actions, reward received, game state, and a previous Q-value if any. An epsilon value controls the randomness of the agent's actions; after a certain number of games, this value hits below zero, thus allowing the agent to shift to exploitation, making non-random predictions for the highest reward-yielding moves.",
+    "team": [
+      "Jay",
+      "Abrar",
+      "Rafid"
+    ],
+    "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
+    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
+    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
+    "cohort": "Spring 2024",
+    "topic": ["AI", "ML"]
   }
 ]
