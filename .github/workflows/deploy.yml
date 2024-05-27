@@ -10,7 +10,7 @@ on:
 name: deploy
 jobs:
   build:
-    name: build-app
+    name: Run Deploy Script on EC2
     runs-on: ubuntu-latest
     steps:      
       - name: Execute pull scripts on EC2
