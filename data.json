@@ -10,9 +10,7 @@
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
     "image": "",
-    "tech-stack": [
-      ""
-    ],
+    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
     "cohort": "Spring 2024",
     "topic": ["AI", "ML"]
   }
