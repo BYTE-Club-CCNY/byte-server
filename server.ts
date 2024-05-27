@@ -1,7 +1,9 @@
 import express from "express";
+import activateDb from "./db";
 import { readFile, readFileSync } from "fs";
 
 
+activateDb();
 const app = express();
 const PORT = 3000;
 
