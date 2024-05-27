@@ -1,17 +1,15 @@
 on: 
-    push:
+  push:
 
-name: run-tests
 jobs: 
-    test:
-        name: run-tests
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
-            - name: Install bun
-              uses: oven-sh/setup-bun@v1
-            - name: Install dependencies
-              run: bun install
-            - name: Run tests
-              run: bun test
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
+      - name: Install dependencies
+        run: bun install
+      - name: Run tests
+        run: bun test
