@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "serve": "ts-node server.ts"
   },
   "dependencies": {
     "@types/chai": "^4.3.16",
