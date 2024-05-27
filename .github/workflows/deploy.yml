@@ -19,4 +19,9 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_KEY }}
-          script: source update.sh
+          script: |
+            cd byte-server
+            pm2 stop server.ts
+            git pull
+            bun install
+            pm2 start server.ts

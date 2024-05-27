@@ -1,3 +1,4 @@
+cd byte-server
 pm2 stop server.ts
 git pull
 bun install
