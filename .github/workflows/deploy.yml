@@ -1,17 +1,22 @@
 on:
-    push: 
-        branches:
-            - main
+  push: 
+    branches:
+      - main
+  workflow_run:
+    workflows: ["run-tests.yml"]
+    types:
+     - completed
 
 name: deploy
 jobs:
   build:
     name: build-app
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v1
-      - name: Install dependencies
-        run: bun install
+    steps:      
+      - name: Execute pull scripts on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_KEY }}
+          script: source update.sh
