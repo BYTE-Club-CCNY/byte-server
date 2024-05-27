@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "mocha --recursive",
-    "serve": "ts-node server.ts"
+    "serve": "nodemon server.ts"
   },
   "dependencies": {
     "@types/chai": "^4.3.16",
@@ -11,6 +11,7 @@
     "chai": "^5.1.1",
     "chai-http": "^4.4.0",
     "express": "^4.19.2",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.1"
   }
 }
