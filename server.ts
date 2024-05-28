@@ -35,38 +35,16 @@ app.get("/", (req, res) => {
 });
 
 app.get("/projects", (req, res) => {
-    if (!req.query) {
-        readFile("./data.json", "utf8", (error, content) => {
-            if (error) {
-                logger.error("Error reading data.json");
-                return res.status(500).send("Error reading file");
-            }
-            return res.status(200).json(JSON.parse(content));
-        });
+    if (req.query) {
+        logger.warn("Query parameters ignored");
     }
 
-    const queryData = req.query;
     readFile("./data.json", "utf8", (error, content) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
         }
-        const jsonData = JSON.parse(content);
-        const filteredData = jsonData.filter((item: any) => {
-            return Object.keys(queryData).every((key) => {
-                return item[key]
-                    .toString()
-                    .toLowerCase()
-                    .includes(queryData[key]?.toString().toLowerCase());
-            });
-        });
-        if (filteredData.length === 0) {
-            logger.warn("No projects found");
-            return res
-                .status(404)
-                .send("The data you are looking for does not exist");
-        }
-        return res.status(200).send(filteredData);
+        return res.status(200).json(JSON.parse(content));
     });
 });
 
@@ -76,6 +54,7 @@ app.get("/getProjectByTeam", (req, res) => {
         res.status(400).send("Missing team");
         return;
     }
+    
     readFile("./data.json", "utf8", (error, content) => {
         if (error) {
             logger.error("Error reading data.json");
@@ -105,6 +84,7 @@ app.get("/getProjectByCohort", (req, res) => {
         res.send("Missing cohort").status(400);
         return;
     }
+
     readFile("data.json", "utf8", (err, data) => {
         if (err) {
             logger.error("Error reading data.json");
