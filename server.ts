@@ -124,11 +124,14 @@ app.get("/getProjectByName", (req, res) => {
             res.send("Error reading file").status(500);
         }
         const jsonData = JSON.parse(data);
-        const filteredData = jsonData.filter((item: any) =>
-            item.name
+        const filteredData = jsonData.filter((item: any) => {
+            const itemData = item.name.toString().toLowerCase();
+            const queryData = req.query.name
+                ?.toString()
                 .toLowerCase()
-                .includes(req.query.name?.toString().toLowerCase())
-        );
+                .split(",");
+            return queryData?.some((query) => itemData.includes(query));
+        });
         if (filteredData.length === 0) {
             logger.warn("No projects found");
             res.send("No projects found").status(404);
