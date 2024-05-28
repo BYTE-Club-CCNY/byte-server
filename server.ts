@@ -54,7 +54,7 @@ app.get("/getProjectByTeam", (req, res) => {
         res.status(400).send("Missing team");
         return;
     }
-    
+
     readFile("./data.json", "utf8", (error, content) => {
         if (error) {
             logger.error("Error reading data.json");
@@ -62,11 +62,12 @@ app.get("/getProjectByTeam", (req, res) => {
         }
         const jsonData = JSON.parse(content);
         const filteredData = jsonData.filter((item: any) => {
-            return item.team
-                .toString()
+            const itemData = item.team.toString().toLowerCase().split(",");
+            const queryData = req.query.team
+                ?.toString()
                 .toLowerCase()
-                .split(",")
-                .includes(req.query.team?.toString().toLowerCase());
+                .split(",");
+            return queryData?.every((query) => itemData.includes(query));
         });
         if (filteredData.length === 0) {
             logger.warn("No projects found");
@@ -91,11 +92,16 @@ app.get("/getProjectByCohort", (req, res) => {
             res.send("Error reading file").status(500);
         }
         const jsonData = JSON.parse(data);
-        const filteredData = jsonData.filter(
-            (item: any) =>
-                item.cohort.toLowerCase() ===
-                req.query.cohort?.toString().toLowerCase()
-        );
+        const filteredData = jsonData.filter((item: any) => {
+            const itemData = item.cohort.toString().toLowerCase().split(",");
+            const queryData = req.query.cohort
+                ?.toString()
+                .toLowerCase()
+                .split(",");
+            console.log(itemData, queryData);
+            return queryData?.includes(itemData);
+        });
+        
         if (filteredData.length === 0) {
             logger.warn("No projects found");
             res.send("No projects found").status(404);
