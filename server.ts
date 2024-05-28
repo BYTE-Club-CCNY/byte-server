@@ -99,9 +99,9 @@ app.get("/getProjectByCohort", (req, res) => {
                 .toLowerCase()
                 .split(",");
             console.log(itemData, queryData);
-            return queryData?.includes(itemData);
+            return itemData.some((item: any) => queryData?.includes(item));
         });
-        
+
         if (filteredData.length === 0) {
             logger.warn("No projects found");
             res.send("No projects found").status(404);
