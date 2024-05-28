@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/getProjectByCohort", (req, res) => {
-    if (!req.query.projectName) {
+    if (!req.query.cohort) {
         res.send("Missing cohort").status(400);
         return;
     }
