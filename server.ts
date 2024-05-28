@@ -1,7 +1,7 @@
 import express from "express";
 import activateDb from "./db";
 
-activateDb();
+// activateDb();
 const app = express();
 const PORT = 3000;
 
