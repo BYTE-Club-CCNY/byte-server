@@ -48,7 +48,7 @@ app.get("/projects", (req, res) => {
     });
 });
 
-app.get("/getProjectByTeam", (req, res) => {
+app.get("/projects/team", (req, res) => {
     if (!req.query.team) {
         logger.error("Team query parameter missing");
         res.status(400).send("Missing team");
@@ -79,7 +79,7 @@ app.get("/getProjectByTeam", (req, res) => {
     });
 });
 
-app.get("/getProjectByCohort", (req, res) => {
+app.get("/projects/cohort", (req, res) => {
     if (!req.query.cohort) {
         logger.error("Cohort query parameter missing");
         res.send("Missing cohort").status(400);
@@ -111,7 +111,7 @@ app.get("/getProjectByCohort", (req, res) => {
     });
 });
 
-app.get("/getProjectByName", (req, res) => {
+app.get("/projects/name", (req, res) => {
     if (!req.query.name) {
         logger.error("Name query parameter missing");
         res.send("Missing project name").status(400);
