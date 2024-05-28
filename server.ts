@@ -1,6 +1,6 @@
 import express from "express";
 import activateDb from "./db";
-import { readFile } from "fs";
+import {readFile} from "fs";
 import winston from "winston";
 
 // activateDb();
@@ -33,6 +33,61 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.send("BYTE @ CCNY").status(200);
 });
+
+app.get('/projects', (req, res) => {
+    if (!req.query) {
+        readFile('./data.json', 'utf8', (error, content) => {
+            if (error) {
+                logger.error("Error reading data.json");
+                return res.status(500).send("Error reading file");
+            }
+            return res.status(200).json(JSON.parse(content));
+        })
+    }
+    
+    const queryData = req.query;
+    readFile('./data.json', 'utf8', (error, content) => {
+        if (error) {
+            logger.error("Error reading data.json");
+            return res.status(500).send("Error reading file");
+        }
+        const jsonData = JSON.parse(content);
+        const filteredData = jsonData.filter((item: any) => {
+            return Object.keys(queryData).every((key) => {
+                return item[key].toString().toLowerCase().includes(queryData[key]?.toString().toLowerCase());
+            })
+        })
+        if (filteredData.length === 0) {
+            logger.warn("No projects found");
+            return res.status(404).send("The data you are looking for does not exist");
+        }
+        return res.status(200).send(filteredData);
+    })
+
+})
+
+app.get('/getProjectByTeam', (req, res) => {
+    if (!req.query.team) {
+        logger.error("Team query parameter missing");
+        res.status(400).send("Missing team");
+        return
+    }
+    readFile('./data.json', 'utf8', (error, content) => {
+        if (error) {
+            logger.error("Error reading data.json");
+            return res.status(500).send("Error reading file");
+        }
+        const jsonData = JSON.parse(content);
+        const filteredData = jsonData.filter((item: any) => {
+            return item.team.toString().toLowerCase().split(',').includes(req.query.team?.toString().toLowerCase());
+        })
+        if (filteredData.length === 0) {
+            logger.warn("No projects found");
+            return res.status(404).send("The data you are looking for does not exist");
+        }
+        return res.status(200).send(filteredData);
+    })
+})
 
 app.get("/getProjectByCohort", (req, res) => {
   if (!req.query.cohort) {
