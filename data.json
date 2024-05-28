@@ -9,9 +9,16 @@
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
     "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
-    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
+    "tech-stack": [
+      "Tkinter",
+      "PyTorch",
+      "NumPy"
+    ],
     "cohort": "Fall 2025",
-    "topic": ["AI", "ML"]
+    "topic": [
+      "AI",
+      "ML"
+    ]
   },
   {
     "name": "2048 AI",
@@ -23,9 +30,16 @@
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
     "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
-    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
+    "tech-stack": [
+      "Tkinter",
+      "PyTorch",
+      "NumPy"
+    ],
     "cohort": "Spring 2024",
-    "topic": ["AI", "ML"]
+    "topic": [
+      "AI",
+      "ML"
+    ]
   },
   {
     "name": "testing",
@@ -37,22 +51,38 @@
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
     "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
-    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
+    "tech-stack": [
+      "Tkinter",
+      "PyTorch",
+      "NumPy"
+    ],
     "cohort": "Spring 2024",
-    "topic": ["AI", "ML"]
+    "topic": [
+      "AI",
+      "ML"
+    ]
   },
   {
-    "name": "website",
-    "short-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game that can in turn yield high reward, thus enabling for exploitation of the game and yielding better gaming performance.",
-    "long-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game. The algorithms enable the agent to identify high-reward moves, thus improving performance through exploitation. The game is built with Tkinter, and is then controlled by the 2048AIAgent through array selection. To train the agent to make predictions for the next best move, each game calculates a Q-value determined by its actions, reward received, game state, and a previous Q-value if any. An epsilon value controls the randomness of the agent's actions; after a certain number of games, this value hits below zero, thus allowing the agent to shift to exploitation, making non-random predictions for the highest reward-yielding moves.",
+    "name": "Don't Be Alarmed",
+    "short-description": "Don't Be Alarmed is an alarm app with a twist with the intention to keep you awake after your alarm goes off. Once the alarm sounds, it requires the user to complete an activity to shut it off, stimulating their mind and preventing them from a cycle of snoozing.",
+    "long-description": "Don’t Be Alarmed is an Android alarm app that incorporates activities to ensure the user is fully awake before turning off the alarm to prevent the user from falling back asleep. Currently, the app offers basic alarm functionality and the option of a math game activity. Once the alarm sounds, the user must solve five math problems correctly to complete the activity and shut it off. The initial prototype was developed in Figma to provide an intuitive and visually pleasing user interface. It was then built in Android Studio using Kotlin and Jetpack Compose to display the designed layout for the frontend and supported by JSON Object to store a database of alarm information for the backend. These tools enable the app to showcase pages featuring alarm lists, customization settings, and activities. Once the user’s scheduled time arrives, it triggers a pre-selected alarm sound and activity.",
     "team": [
-      "Jay",
-      "Rafid"
+      "Name 1",
+      "Name 2",
+      "Name 3"
     ],
-    "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
-    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
-    "tech-stack": ["Tkinter", "PyTorch", "NumPy"],
-    "cohort": "Fall 2028",
-    "topic": ["AI", "ML"]
+    "link": "place it here",
+    "image": "place URL here?",
+    "tech-stack": [
+      "What",
+      "Did",
+      "You",
+      "Use?"
+    ],
+    "cohort": "Spring 2024",
+    "topic": [
+      "Topics",
+      "Topics"
+    ]
   }
 ]
