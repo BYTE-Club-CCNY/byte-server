@@ -8,7 +8,7 @@
       "Rafid"
     ],
     "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
-    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
+    "image": "https://byte-media.s3.us-east-2.amazonaws.com/2048AI.png",
     "tech-stack": [
       "Tkinter",
       "PyTorch",
@@ -53,7 +53,7 @@
       "Brandon"
     ],
     "link": "https://github.com/BYTE-Club-CCNY/leetcode-tracker",
-    "image": "https://cdn.discordapp.com/attachments/1214644704944193649/1245238666280960021/image.png?ex=66580661&is=6656b4e1&hm=227a809cb31db0ba9eb7ef60b2d41b36af3d1386b239725e98326f6653d0a4e9&",
+    "image": "https://byte-media.s3.us-east-2.amazonaws.com/DontBeAlarmed.png",
     "tech-stack": [
       "React",
       "JavaScript",
@@ -77,7 +77,7 @@
       "Thanjila"
     ],
     "link": "https://github.com/BYTE-Club-CCNY/DontBeAlarmed",
-    "image": "https://cdn.discordapp.com/attachments/1214644082186518648/1245160025094226013/Screenshot_2024-05-28_at_7.41.20_PM.png?ex=6657bd23&is=66566ba3&hm=ce80689cb414b6f16ccbb578c833d007bd237a06864bcdb89289b7fe5305c200&",
+    "image": "https://byte-media.s3.us-east-2.amazonaws.com/trackleet.png",
     "tech-stack": [
       "Kotlin",
       "Jetpack Compose",
@@ -87,6 +87,59 @@
     "cohort": "Spring 2024",
     "topic": [
       "Android App Development"
+    ]
+  },
+  {
+    "name": "BYTE Website",
+    "short-description": "The BYTE website is a platform that showcases the projects and achievements of the BYTE club members. It is a hub for all things BYTE, including information about the club, its members, and the projects they have worked on.",
+    "long-description": "The BYTE website is a platform that showcases the projects and achievements of the BYTE club members. It is a hub for all things BYTE, including information about the club, its members, and the projects they have worked on. The website is built using React.js, a popular JavaScript library for building user interfaces. It features a clean and modern design that is easy to navigate and visually appealing. The website is divided into several sections, including a home page, about page, projects page, and contact page. Each section provides valuable information about the club and its members, as well as links to their social media profiles and GitHub repositories. The website is fully responsive and works on all devices, from desktop computers to smartphones and tablets.",
+    "team": [
+      "Ayan",
+      "Jay",
+      "Evan",
+      "Fahad"
+    ],
+    "link": "https://github.com/BYTE-Club-CCNY/byte",
+    "image": "",
+    "tech-stack": [
+      "Next.js",
+      "Typescript",
+      "Tailwind CSS",
+      "AWS Amplify",
+      "Github Actions"
+    ],
+    "cohort": "Summer 2024",
+    "topic": [
+      "Web Development"
+    ]
+  },
+  {
+    "name": "BYTE Server",
+    "short-description": "The BYTE server is the backend server that supports the BYTE website. It is responsible for handling requests from the website, fetching data from the database, and sending responses back to the client.",
+    "long-description": "The BYTE server is a backend server that supports the BYTE website. It is responsible for handling requests from the website, fetching data from the database, and sending responses back to the client. The server is hosted on AWS EC2 on a Bun runtime. It uses Express.js, a web application framework for Node.js, to handle HTTP/S requests and responses. The server interacts with a PostgreSQL database - JSON as backup - to store and retrieve data for the website. The purpose of the server is to allow for the website to call only on the data they require & serve projects to the user.",
+    "team": [
+      "Ivan",
+      "Abrar",
+      "Fahad"
+    ],
+    "link": "https://github.com/BYTE-Club-CCNY/byte-server",
+    "image": "",
+    "tech-stack": [
+      "Node.js",
+      "Bun",
+      "Express",
+      "PostgreSQL",
+      "AWS EC2",
+      "Github Actions",
+      "Docker"
+    ],
+    "cohort": "Summer 2024",
+    "topic": [
+      "Web Development",
+      "Backend",
+      "Server Development",
+      "API",
+      "Postgres"
     ]
   }
 ]
