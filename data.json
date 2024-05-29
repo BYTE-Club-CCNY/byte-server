@@ -14,52 +14,57 @@
       "PyTorch",
       "NumPy"
     ],
-    "cohort": "Fall 2028",
+    "cohort": "Fall 2025",
     "topic": [
       "AI",
       "ML"
     ]
   },
   {
-    "name": "2048 AI",
-    "short-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game that can in turn yield high reward, thus enabling for exploitation of the game and yielding better gaming performance.",
-    "long-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game. The algorithms enable the agent to identify high-reward moves, thus improving performance through exploitation. The game is built with Tkinter, and is then controlled by the 2048AIAgent through array selection. To train the agent to make predictions for the next best move, each game calculates a Q-value determined by its actions, reward received, game state, and a previous Q-value if any. An epsilon value controls the randomness of the agent's actions; after a certain number of games, this value hits below zero, thus allowing the agent to shift to exploitation, making non-random predictions for the highest reward-yielding moves.",
+    "name": "Stockbros",
+    "short-description": "StockBros is a simple application that tracks the stock price of a set companies. It updates the stock price in real time and simultaneously displays relevant news articles corresponding to specific dates. This dual aspect allows the user to relate the fluctuation in stock prices with major news events.",
+    "long-description": "The stockbros application is designed to display stock information and related news. This program allows users to select one of many different stocks from a dropdown menu and specify a start date and an end date to define the date range for the stock data they wish to view. It then generates a plot of the selected stock's average price over the specified date range. The graph displays the average stock prices on the y-axis and dates on the x-axis. Below the graph, the application pulls up three news articles related to the selected stock within the specified date range, displaying clickable headlines. The user interface is built using React.js, the back-end logic is implemented with Python and Flask, and the graph is created using Pandas and Plotly. The news articles are fetched using the World News API.",
     "team": [
-      "Jay",
-      "Abrar"
+      "Kritan Baniya",
+      "Mudassir Sami"
     ],
-    "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
-    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
+    "link": "https://github.com/BYTE-Club-CCNY/StockBros",
+    "image": "",
     "tech-stack": [
-      "Tkinter",
-      "PyTorch",
-      "NumPy"
+      "Pandas",
+      "Plotly",
+      "Flask",
+      "React"
     ],
     "cohort": "Spring 2024",
     "topic": [
-      "AI",
-      "ML"
+      "Data Science",
+      "Finance"
     ]
   },
   {
-    "name": "testing",
-    "short-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game that can in turn yield high reward, thus enabling for exploitation of the game and yielding better gaming performance.",
-    "long-description": "A 2048 AI agent trained with Q-learning and reinforcement learning algorithms to explore possible random moves in the game. The algorithms enable the agent to identify high-reward moves, thus improving performance through exploitation. The game is built with Tkinter, and is then controlled by the 2048AIAgent through array selection. To train the agent to make predictions for the next best move, each game calculates a Q-value determined by its actions, reward received, game state, and a previous Q-value if any. An epsilon value controls the randomness of the agent's actions; after a certain number of games, this value hits below zero, thus allowing the agent to shift to exploitation, making non-random predictions for the highest reward-yielding moves.",
+    "name": "TrackLeet",
+    "short-description": "A chrome extension built by a team of aspiring software engineers with the aim to assist students in their journey of leetcode grinding through automated tracking, reminders, and more.",
+    "long-description": "TrackLeet is a chrome extension built by a team of aspiring software engineers with the aim to assist students in their journey of leetcode grinding. After a quick setup process, the extension automatically tracks the user’s leetcode progress. When submitting an accepted answer, the extension tracks the completion and displays previously attempted problems for progress check over time. If a user does not successfully complete a question, the extension will log the failed attempt and notify them through an email system in 2 weeks. Through repetition in learning students are more likely to retain key insights and strategies used when tackling the problem. Furthermore, users get an hour to complete the question or they have the option to adjust the time catered to their needs. Our learning journey began with nothing but frustration, however you can start right away with a companion that makes your journey efficient, organized, and downright enjoyable!",
     "team": [
-      "Jay",
-      "Rafid"
+      "Abdul",
+      "Ivan",
+      "Mohammad",
+      "Brandon"
     ],
-    "link": "https://github.com/BYTE-Club-CCNY/2048-AI",
-    "image": "https://media.discordapp.net/attachments/1214644238000726086/1244773273196298371/image.png?ex=665654f3&is=66550373&hm=881f9af5389ca7d1f4f914709a028be0d139543d8451962bd1d8fc38514e4302&=&format=webp&quality=lossless",
+    "link": "https://github.com/BYTE-Club-CCNY/leetcode-tracker",
+    "image": "https://cdn.discordapp.com/attachments/1214644704944193649/1245238666280960021/image.png?ex=66580661&is=6656b4e1&hm=227a809cb31db0ba9eb7ef60b2d41b36af3d1386b239725e98326f6653d0a4e9&",
     "tech-stack": [
-      "Tkinter",
-      "PyTorch",
-      "NumPy"
+      "React",
+      "JavaScript",
+      "Supabase"
     ],
     "cohort": "Spring 2024",
     "topic": [
-      "AI",
-      "ML"
+      "Leetcode",
+      "Chrome Extension",
+      "Web Development",
+      "Authentication"
     ]
   },
   {
@@ -67,22 +72,21 @@
     "short-description": "Don't Be Alarmed is an alarm app with a twist with the intention to keep you awake after your alarm goes off. Once the alarm sounds, it requires the user to complete an activity to shut it off, stimulating their mind and preventing them from a cycle of snoozing.",
     "long-description": "Don't Be Alarmed is an Android alarm app that incorporates activities to ensure the user is fully awake before turning off the alarm to prevent the user from falling back asleep. Currently, the app offers basic alarm functionality and the option of a math game activity. Once the alarm sounds, the user must solve five math problems correctly to complete the activity and shut it off. The initial prototype was developed in Figma to provide an intuitive and visually pleasing user interface. It was then built in Android Studio using Kotlin and Jetpack Compose to display the designed layout for the frontend and supported by JSON Object to store a database of alarm information for the backend. These tools enable the app to showcase pages featuring alarm lists, customization settings, and activities. Once the user’s scheduled time arrives, it triggers a pre-selected alarm sound and activity.",
     "team": [
-      "Name 1",
-      "Name 2",
-      "Name 3"
+      "Franklin",
+      "Judy",
+      "Thanjila"
     ],
-    "link": "place it here",
-    "image": "place URL here?",
+    "link": "https://github.com/BYTE-Club-CCNY/DontBeAlarmed",
+    "image": "https://cdn.discordapp.com/attachments/1214644082186518648/1245160025094226013/Screenshot_2024-05-28_at_7.41.20_PM.png?ex=6657bd23&is=66566ba3&hm=ce80689cb414b6f16ccbb578c833d007bd237a06864bcdb89289b7fe5305c200&",
     "tech-stack": [
-      "What",
-      "Did",
-      "You",
-      "Use?"
+      "Kotlin",
+      "Jetpack Compose",
+      "JSON Object",
+      "Android Studio"
     ],
-    "cohort": "Spring 2028",
+    "cohort": "Spring 2024",
     "topic": [
-      "Topics",
-      "Topics"
+      "Android App Development"
     ]
   }
 ]
