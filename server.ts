@@ -1,8 +1,7 @@
-import express from "express";
 import activateDb from "./db";
 import logger from "./utils/logger";
 
-// activateDb();
+const express = require("express");
 const app = express();
 const PORT = 3000;
 const projectsLocal = require("./routes/projectsLocal");
@@ -18,13 +17,13 @@ const connectDB = async (req: any, res: any, next: any) => {
     }
 }
 
-app.use((req, res, next) => {
+app.use((req: any, res: any, next: any) => {
     // Log an info message for each incoming request
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
 });
 
-app.get("/", (req, res) => {
+app.get("/", (req: any, res: any) => {
     res.send("BYTE @ CCNY").status(200);
 });
 

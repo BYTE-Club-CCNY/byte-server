@@ -13,4 +13,5 @@ const activateDb = async () => {
     } 
 }
 
+
 export default activateDb;

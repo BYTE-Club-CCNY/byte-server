@@ -1,15 +1,15 @@
-import {Router} from 'express';
-import {readFile} from 'fs';
 import logger from '../utils/logger';
 
-const router = Router();
+const express = require("express");
+const router = express.Router();
+const fs = require("fs");
 
-router.get("/", (req, res) => {
+router.get("/", (req: any, res: any) => {
     if (req.query) {
         logger.warn("Query parameters ignored");
     }
 
-    readFile("./data.json", "utf8", (error, content) => {
+    fs.readFile("./data.json", "utf8", (error, content) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -18,14 +18,14 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/team", (req, res) => {
+router.get("/team", (req: any, res: any) => {
     if (!req.query.team) {
         logger.error("Team query parameter missing");
         res.status(400).send("Missing team");
         return;
     }
 
-    readFile("./data.json", "utf8", (error, content) => {
+    fs.readFile("./data.json", "utf8", (error, content) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -49,14 +49,14 @@ router.get("/team", (req, res) => {
     });
 });
 
-router.get("/cohort", (req, res) => {
+router.get("/cohort", (req: any, res: any) => {
     if (!req.query.cohort) {
         logger.error("Cohort query parameter missing");
         res.send("Missing cohort").status(400);
         return;
     }
 
-    readFile("data.json", "utf8", (err, data) => {
+    fs.readFile("data.json", "utf8", (err, data) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);
@@ -81,14 +81,14 @@ router.get("/cohort", (req, res) => {
     });
 });
 
-router.get("/name", (req, res) => {
+router.get("/name", (req: any, res: any) => {
     if (!req.query.name) {
         logger.error("Name query parameter missing");
         res.send("Missing project name").status(400);
         return;
     }
 
-    readFile("data.json", "utf8", (err, data) => {
+    fs.readFile("data.json", "utf8", (err, data) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);
