@@ -17,7 +17,7 @@ const connectDB = async (req: any, res: any, next: any) => {
         }
         await activateDb();
         isActive = true;
-        next();
+        next(); 
     } catch (err: any) {
         logger.info(err.message);
         next("route");
@@ -33,7 +33,7 @@ app.use((req: any, res: any, next: any) => {
 app.get("/", (req: any, res: any) => {
     res.send("BYTE @ CCNY").status(200);
 });
-
+ 
 app.use("/projects", connectDB, projectsDB);
 
 app.use("/projects", projectsLocal);

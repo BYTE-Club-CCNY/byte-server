@@ -1,4 +1,4 @@
-import client from "../db.config";
+import { connectedClient } from "../db";
 
 const express = require("express");
 const router = express.Router();
