@@ -1,5 +1,4 @@
-import logger from '../utils/logger';
-
+const logger = require("../utils/logger");
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
