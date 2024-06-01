@@ -8,7 +8,7 @@ router.get("/", (req: any, res: any) => {
         logger.warn("Query parameters ignored");
     }
 
-    fs.readFile("./data.json", "utf8", (error, content) => {
+    fs.readFile("../data.json", "utf8", (error: any, content: any) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -24,7 +24,7 @@ router.get("/team", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("./data.json", "utf8", (error, content) => {
+    fs.readFile("../data.json", "utf8", (error: any, content: any) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -36,7 +36,7 @@ router.get("/team", (req: any, res: any) => {
                 ?.toString()
                 .toLowerCase()
                 .split(",");
-            return queryData?.every((query) => itemData.includes(query));
+            return queryData?.every((query: any) => itemData.includes(query));
         });
         if (filteredData.length === 0) {
             logger.warn("No projects found");
@@ -55,7 +55,7 @@ router.get("/cohort", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("data.json", "utf8", (err, data) => {
+    fs.readFile("../data.json", "utf8", (err: any, data: any) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);
@@ -87,7 +87,7 @@ router.get("/name", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("data.json", "utf8", (err, data) => {
+    fs.readFile("../data.json", "utf8", (err: any, data: any) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);
@@ -99,7 +99,7 @@ router.get("/name", (req: any, res: any) => {
                 ?.toString()
                 .toLowerCase()
                 .split(",");
-            return queryData?.some((query) => itemData.includes(query));
+            return queryData?.some((query: any) => itemData.includes(query));
         });
         if (filteredData.length === 0) {
             logger.warn("No projects found");

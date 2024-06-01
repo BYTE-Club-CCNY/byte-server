@@ -6,12 +6,9 @@ const activateDb = async () => {
     try {
       await client.connect();
       console.log("Database connected");
-
-      return client;
     } catch (err: any) {
       throw new Error(`Database connection error\n ${err.message}`);
     } 
 }
-
 
 export default activateDb;
