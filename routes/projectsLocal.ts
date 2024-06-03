@@ -1,14 +1,17 @@
 import logger from "../utils/logger";
-import express from "express";
-import fs from "fs";
-const router = express.Router();
+import { Router } from "express";
+import { readFile } from "fs";
+import path from "path";
+
+const router = Router();
+const FILE_PATH: string = path.resolve(__dirname, "../data.json");
 
 router.get("/", (req: any, res: any) => {
     if (req.query) {
         logger.warn("Query parameters ignored");
     }
-
-    fs.readFile("../data.json", "utf8", (error: any, content: any) => {
+    
+    readFile(FILE_PATH, "utf8", (error: any, content: any) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -24,7 +27,7 @@ router.get("/team", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("../data.json", "utf8", (error: any, content: any) => {
+    readFile(FILE_PATH, "utf8", (error: any, content: any) => {
         if (error) {
             logger.error("Error reading data.json");
             return res.status(500).send("Error reading file");
@@ -55,7 +58,7 @@ router.get("/cohort", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("../data.json", "utf8", (err: any, data: any) => {
+    readFile(FILE_PATH, "utf8", (err: any, data: any) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);
@@ -87,7 +90,7 @@ router.get("/name", (req: any, res: any) => {
         return;
     }
 
-    fs.readFile("../data.json", "utf8", (err: any, data: any) => {
+    readFile(FILE_PATH, "utf8", (err: any, data: any) => {
         if (err) {
             logger.error("Error reading data.json");
             res.send("Error reading file").status(500);

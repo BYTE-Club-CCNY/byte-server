@@ -1,7 +1,6 @@
 import { Client } from "pg";
 import activateDb from "./db";
 import logger from "./utils/logger";
-import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
 import express from "express";
 

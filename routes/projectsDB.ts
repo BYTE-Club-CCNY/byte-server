@@ -1,7 +1,8 @@
 import { Client } from "pg";
 import activateDb from "../db";
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
+
+const router = Router();
 
 let client: Client | undefined;
 
