@@ -1,18 +1,16 @@
 import { Client } from "pg";
 import activateDb from "../db";
-import {Router} from "express";
-const router: Router = Router();
+import express from "express";
+let router = express.Router();
+let client: Client | undefined;
 
 router.get("/", async (req: any, res: any) => {
-    let client: Client | undefined;
-
-    try{
+    try {
         client = await activateDb();
-        await client.end()
-    } catch (e) {
-        return res.status(500).send("Internal Server Error");
+        await client.end();
+    } catch (err: any) {
+        return res.status(500).send(err.message);
     }
-
     return res.status(200).send("Projects Database");
 });
 

@@ -1,7 +1,7 @@
-const logger = require("../utils/logger");
-const express = require("express");
+import logger from "../utils/logger";
+import express from "express";
+import fs from "fs";
 const router = express.Router();
-const fs = require("fs");
 
 router.get("/", (req: any, res: any) => {
     if (req.query) {
@@ -110,4 +110,4 @@ router.get("/name", (req: any, res: any) => {
     });
 });
 
-module.exports = router;
+export default router;

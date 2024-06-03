@@ -3,8 +3,8 @@ import activateDb from "./db";
 import logger from "./utils/logger";
 import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
+import express from "express";
 
-const express = require("express");
 const app = express();
 const PORT = 3000;
 
