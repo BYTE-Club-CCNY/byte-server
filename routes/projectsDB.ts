@@ -1,15 +1,13 @@
-import { Client } from "pg";
-import activateDb from "../db";
-import { Router } from "express";
+import {Router} from "express";
+import connectDB from "../connectDB";
 
-const router = Router();
+const router: Router = Router();
 
-let client: Client | undefined;
+router.use(connectDB);
 
 router.get("/", async (req: any, res: any) => {
     try {
-        client = await activateDb();
-        await client.end();
+        await req.client.query('SELECT * FROM projects');
         return res.status(200).send("No errors!!");
     } catch (err: any) {
         return res.status(500).send(err.message);

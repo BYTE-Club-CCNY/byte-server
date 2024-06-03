@@ -1,15 +1,15 @@
 import client from './db.config';
 
-const activateDb = async () => {
-    console.log("Connecting to Database ...");
+const getDB = async () => {
+  console.log("Connecting to Database ...");
 
-    try {
-      await client.connect();
-      console.log("Database connected");
-      return client;
-    } catch (err: any) {
-      throw new Error(`Database connection error\n ${err.message}`);
-    } 
+	try {
+		await client.connect();
+		console.log("Database connected");
+		return client;
+	} catch (err: any) {
+		return client;
+	} 
 }
 
-export default activateDb;
+export default getDB;
