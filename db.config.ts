@@ -10,4 +10,7 @@ const client = new Client({
     port: process.env.POSTGRESQL_DB_PORT ? parseInt(process.env.POSTGRESQL_DB_PORT) : 5432
 });
 
+client.on('end', () => console.log('Client has disconnected'));
+client.on('error', (err) => console.error('Unexpected error on idle client', err));
+
 export default client;
