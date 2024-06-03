@@ -1,10 +1,19 @@
-import { connectedClient } from "../db";
+import { Client } from "pg";
+import activateDb from "../db";
+import {Router} from "express";
+const router: Router = Router();
 
-const express = require("express");
-const router = express.Router();
+router.get("/", async (req: any, res: any) => {
+    let client: Client | undefined;
 
-router.get("/", (req: any, res: any) => {
-    res.status(200).send("Projects Database");
+    try{
+        client = await activateDb();
+        await client.end()
+    } catch (e) {
+        return res.status(500).send("Internal Server Error");
+    }
+
+    return res.status(200).send("Projects Database");
 });
 
-module.exports = router;
+export default router;

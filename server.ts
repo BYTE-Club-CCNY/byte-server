@@ -1,22 +1,19 @@
+import { Client } from "pg";
 import activateDb from "./db";
 import logger from "./utils/logger";
+import projectsLocal from "./routes/projectsLocal";
+import projectsDB from "./routes/projectsDB";
 
 const express = require("express");
 const app = express();
 const PORT = 3000;
-const projectsLocal = require("./routes/projectsLocal");
-const projectsDB = require("./routes/projectsDB");
 
-let isActive = false;
+let client: Client | undefined;
 
 const connectDB = async (req: any, res: any, next: any) => {
     try {
-        if (isActive) {
-            logger.info("Database already connected");
-            return next();
-        }
-        await activateDb();
-        isActive = true;
+        client = await activateDb();
+        await client.end();
         next(); 
     } catch (err: any) {
         logger.info(err.message);
@@ -33,10 +30,14 @@ app.use((req: any, res: any, next: any) => {
 app.get("/", (req: any, res: any) => {
     res.send("BYTE @ CCNY").status(200);
 });
- 
-app.use("/projects", connectDB, projectsDB);
 
-app.use("/projects", projectsLocal);
+
+// if (!client) {
+//     app.use("/projects", projectsLocal);
+// } else {
+    app.use("/projects", connectDB, projectsDB);
+// }
+
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
