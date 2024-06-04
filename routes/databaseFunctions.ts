@@ -1,6 +1,5 @@
 import { Client } from "pg";
 
-// todo: wrap everything in a try catch block and pass the exception to the user
 export function addToDB(client: Client, valuesToQuery: any) {
   const query = `
         INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
@@ -17,5 +16,10 @@ export function addToDB(client: Client, valuesToQuery: any) {
     valuesToQuery.cohort,
     valuesToQuery.topic,
   ];
-  client.query(query, values);
+
+  try {
+    return client.query(query, values);
+  } catch (e: any) {
+    throw Error(e.toString());
+  }
 }
