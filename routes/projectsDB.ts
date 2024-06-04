@@ -60,7 +60,6 @@ router.get("/get", (req: any, res: any) => {
 });
 
 router.post("/add", (req: any, res: any) => {
-  const keys: Array<any> = Object.keys(req.body);
   const values: Array<any> = Object.values(req.body);
 
   try {
