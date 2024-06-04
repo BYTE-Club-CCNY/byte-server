@@ -5,17 +5,21 @@ import { Client } from "pg";
  * Assumes values array correctly maps to the database schema (no empty values, etc.)
  */
 export function addToDB(client: Client, values: Array<any>) {
-  const query = `
+    const query = `
         INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
 
-  try {
-    return client.query(query, values);
-  } catch (e: any) {
-    throw Error(e);
-  }
+    try {
+        return client.query(query, values);
+    } catch (e: any) {
+        throw Error(e);
+    }
 }
 
-export function getFromDB(client: Client, parameters: Array<any>) {
-  return null;
+export function getFromDB(client: Client, query: string, values: Array<any>) {
+    try {
+        return client.query(query, values);
+    } catch (e: any) {
+        throw Error(e);
+    }
 }

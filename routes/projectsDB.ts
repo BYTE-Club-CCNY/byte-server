@@ -2,7 +2,8 @@ import { Router } from "express";
 import connectDB from "../connectDB";
 import express from "express";
 import logger from "../utils/logger";
-import { addToDB } from "./databaseFunctions";
+import { addToDB, getFromDB } from "./databaseFunctions";
+import { QueryResult } from "pg";
 
 const router: Router = Router();
 
@@ -13,11 +14,11 @@ router.get("/", async (req: any, res: any) => {
   try {
     return res.status(200).send("No errors!!");
   } catch (err: any) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ "message": err.message });
   }
 });
 
-router.get("/get", (req: any, res: any) => {
+router.get("/get", async (req: any, res: any) => {
   let baseQuery = "SELECT * FROM projects";
   const filters: string[] = [];
   const values: (string | number)[] = [];
@@ -45,17 +46,12 @@ router.get("/get", (req: any, res: any) => {
   }
 
   // execute the query, making sure to provide the values for the filters
-  req.client.query(baseQuery, values, (err: any, result: any) => {
-    if (err) {
-      logger.error(`Error reading from database: ${err.message}`);
-      return res.status(500).json({ message: "Error reading from database" });
-    }
-    if (result.rows.length === 0) {
-      logger.warn("No projects found");
-      return res.status(404).json({ message: "No projects found" });
-    }
-    return res.status(200).send(result.rows);
-  });
+  try {
+    const data: QueryResult = await getFromDB(req.client, baseQuery, values);
+    return res.status(200).send(data.rows);
+  } catch {
+    return res.status(500).json({"message": "Error retrieving data"});
+  }
 });
 
 router.post("/add", (req: any, res: any) => {
@@ -70,7 +66,8 @@ router.post("/add", (req: any, res: any) => {
 });
 
 router.post("/update", (req: any, res: any) => {
-  // TODO
+  // TODO: Implement this endpoint
+
 });
 
 export default router;
