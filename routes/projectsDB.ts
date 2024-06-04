@@ -11,7 +11,6 @@ router.use(express.json());
 
 router.get("/", async (req: any, res: any) => {
   try {
-    await req.client.query("SELECT * FROM projects");
     return res.status(200).send("No errors!!");
   } catch (err: any) {
     return res.status(500).send(err.message);
@@ -66,7 +65,7 @@ router.post("/add", (req: any, res: any) => {
     addToDB(req.client, values);
     return res.status(200).send("Project added successfully");
   } catch (err: any) {
-    return res.status(500).send(err.message);
+    return res.status(400).send(err.message);
   }
 });
 
