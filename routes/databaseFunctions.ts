@@ -15,3 +15,7 @@ export function addToDB(client: Client, values: Array<any>) {
     throw Error(e);
   }
 }
+
+export function getFromDB(client: Client, parameters: Array<any>) {
+  return null;
+}
