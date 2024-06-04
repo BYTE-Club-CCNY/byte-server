@@ -2,6 +2,7 @@ import { Router } from "express";
 import connectDB from "../connectDB";
 import express from "express";
 import logger from "../utils/logger";
+import { addToDB } from "./databaseFunctions";
 
 const router: Router = Router();
 
@@ -63,6 +64,8 @@ router.get("/get", (req: any, res: any) => {
 router.post("/add", (req: any, res: any) => {
     const keys = Object.keys(req.body);
     const values = Object.values(req.body);
+
+    
 
     const query = `INSERT INTO projects (${keys
         .map((key) => {
