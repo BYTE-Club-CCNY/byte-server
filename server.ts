@@ -17,10 +17,13 @@ app.get("/", (req: any, res: any) => {
     res.send("BYTE @ CCNY").status(200);
 });
 
-
 // app.use("/projects", projectsLocal);
 app.use("/projects", projectsDB);
 
+// any other route will return a 404
+app.get("*", (req: any, res: any) => {
+    res.status(404).json({ message: "Page not found" });
+});
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
