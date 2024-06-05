@@ -22,7 +22,7 @@ app.use("/projects", projectsDB);
 
 // any other route will return a 404
 app.get("*", (req: any, res: any) => {
-    res.status(404).json({ message: "Page not found" });
+    res.status(404).json({ message: "Page not found. Invalid path or method provided to make this request." });
 });
 
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import { Router } from "express";
 import connectDB from "../connectDB";
 import express from "express";
 import logger from "../utils/logger";
-import { addToDB, getFromDB } from "./databaseFunctions";
+import { queryDatabase } from "./databaseFunctions";
 import { QueryResult } from "pg";
 
 const router: Router = Router();
@@ -47,7 +47,7 @@ router.get("/get", async (req: any, res: any) => {
 
   // execute the query, making sure to provide the values for the filters
   try {
-    const data: QueryResult = await getFromDB(req.client, baseQuery, values);
+    const data: QueryResult = await queryDatabase(req.client, baseQuery, values);
     return res.status(200).send(data.rows);
   } catch {
     return res.status(500).json({"message": "Error retrieving data"});
@@ -60,7 +60,7 @@ router.post("/add", (req: any, res: any) => {
   INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
   try {
-    addToDB(req.client, query, values);
+    queryDatabase(req.client, query, values);
     return res.status(200).send("Project added successfully");
   } catch (err: any) {
     return res.status(400).send(err.message);
@@ -98,7 +98,7 @@ router.put("/update", async (req: any, res: any) => {
   console.log(query);
   console.log(values);
   try {
-    await addToDB(req.client, query, values);
+    await queryDatabase(req.client, query, values);
     return res.status(200).send("Project updated successfully");
   } catch (err: any) {
     return res.status(400).json({ message: err.message });
