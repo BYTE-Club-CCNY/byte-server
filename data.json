@@ -27,7 +27,7 @@
     "long-description": "TrackLeet is a chrome extension built by a team of aspiring software engineers with the aim to assist students in their journey of leetcode grinding. After a quick setup process, the extension automatically tracks the user’s leetcode progress. When submitting an accepted answer, the extension tracks the completion and displays previously attempted problems for progress check over time. If a user does not successfully complete a question, the extension will log the failed attempt and notify them through an email system in 2 weeks. Through repetition in learning students are more likely to retain key insights and strategies used when tackling the problem. Furthermore, users get an hour to complete the question or they have the option to adjust the time catered to their needs. Our learning journey began with nothing but frustration, however you can start right away with a companion that makes your journey efficient, organized, and downright enjoyable!",
     "team": ["Abdul", "Ivan", "Mohammad", "Brandon"],
     "link": "https://github.com/BYTE-Club-CCNY/leetcode-tracker",
-    "image": "https://byte-media.s3.us-east-2.amazonaws.com/DontBeAlarmed.png",
+    "image": "https://byte-media.s3.us-east-2.amazonaws.com/trackleet.png",
     "tech-stack": ["React", "JavaScript", "Supabase"],
     "cohort": "Spring 2024",
     "topic": [
@@ -43,7 +43,7 @@
     "long-description": "Don't Be Alarmed is an Android alarm app that incorporates activities to ensure the user is fully awake before turning off the alarm to prevent the user from falling back asleep. Currently, the app offers basic alarm functionality and the option of a math game activity. Once the alarm sounds, the user must solve five math problems correctly to complete the activity and shut it off. The initial prototype was developed in Figma to provide an intuitive and visually pleasing user interface. It was then built in Android Studio using Kotlin and Jetpack Compose to display the designed layout for the frontend and supported by JSON Object to store a database of alarm information for the backend. These tools enable the app to showcase pages featuring alarm lists, customization settings, and activities. Once the user’s scheduled time arrives, it triggers a pre-selected alarm sound and activity.",
     "team": ["Franklin", "Judy", "Thanjila"],
     "link": "https://github.com/BYTE-Club-CCNY/DontBeAlarmed",
-    "image": "https://byte-media.s3.us-east-2.amazonaws.com/trackleet.png",
+    "image": "https://byte-media.s3.us-east-2.amazonaws.com/DontBeAlarmed.png",
     "tech-stack": [
       "Kotlin",
       "Jetpack Compose",
