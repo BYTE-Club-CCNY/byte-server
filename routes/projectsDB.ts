@@ -4,6 +4,7 @@ import express from "express";
 import logger from "../utils/logger";
 import { queryDatabase } from "./databaseFunctions";
 import { QueryResult } from "pg";
+import validate from "../middlewares/validate";
 
 const router: Router = Router();
 
@@ -54,7 +55,7 @@ router.get("/get", async (req: any, res: any) => {
   }
 });
 
-router.post("/add", (req: any, res: any) => {
+router.post("/add", validate, (req: any, res: any) => {
   const values: Array<any> = Object.values(req.body);
   const query = `
   INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
@@ -67,7 +68,7 @@ router.post("/add", (req: any, res: any) => {
   }
 });
 
-router.put("/update", async (req: any, res: any) => {
+router.put("/update", validate, async (req: any, res: any) => {
   const projectName = req.query.name;
 
   if (!projectName) {
@@ -95,8 +96,6 @@ router.put("/update", async (req: any, res: any) => {
     UPDATE projects
     SET ${setClauses.join(", ")}
     WHERE name = $${values.length}`;
-  console.log(query);
-  console.log(values);
   try {
     await queryDatabase(req.client, query, values);
     return res.status(200).send("Project updated successfully");
