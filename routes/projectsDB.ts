@@ -12,7 +12,7 @@ router.use(express.json());
 
 router.get("/", async (req: any, res: any) => {
   try {
-    return res.status(200).send("No errors!!");
+    return res.status(200).json({"message": "API is operational."});
   } catch (err: any) {
     return res.status(500).json({ "message": err.message });
   }
@@ -61,9 +61,9 @@ router.post("/add", (req: any, res: any) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
   try {
     queryDatabase(req.client, query, values);
-    return res.status(200).send("Project added successfully");
+    return res.status(200).json({"message": "Project added successfully"});
   } catch (err: any) {
-    return res.status(400).send(err.message);
+    return res.status(400).json({"message": err.message});
   }
 });
 
