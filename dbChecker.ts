@@ -12,11 +12,12 @@ import { spawn } from "child_process";
 function secondsToMs(d: number) {
     return d * 1000;
 }
-const INTERVAL = secondsToMs(1);
+const INTERVAL = secondsToMs(60 * 60);
+const TIMEOUT = secondsToMs(30);
 
 // threading should happen at top level of server "setInterval"
 function checkDB() {
-    const database = spawn("bun", ["dbCheck.ts", INTERVAL.toString()]);
+    const database = spawn("bun", ["dbCheck.ts", TIMEOUT.toString()]);
     database.stdout.on("data", (data) => {
         console.log(data.toString());
     });
