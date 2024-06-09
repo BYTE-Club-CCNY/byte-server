@@ -1,5 +1,5 @@
 import { Router } from "express";
-import connectDB from "../connectDB";
+import connectDB from "../middlewares/connectDB";
 import express from "express";
 import logger from "../utils/logger";
 import { queryDatabase } from "./databaseFunctions";
