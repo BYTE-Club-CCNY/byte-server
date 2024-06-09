@@ -9,7 +9,7 @@ import getDB from "../db";
 const router: Router = Router();
 const client: Client = await getDB();
 
-router.use(express.json());
+// router.use(express.json());
 router.use((req: any, res: any, next: any) => {
     logger.info(`Received ${req.url} request for database projects`);
     next();
