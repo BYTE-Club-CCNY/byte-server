@@ -6,10 +6,10 @@ import checkDB, { secondsToMs } from "./dbChecker";
 import cors from "cors";
 
 const PORT = 3000;
-const INTERVAL = secondsToMs(5);
-const TIMEOUT = secondsToMs(2);
+const INTERVAL = secondsToMs(60 * 60); // 1 hr
+const TIMEOUT = secondsToMs(10);
 const app = express();
-let dbAval: boolean = false;
+let dbAval: boolean = true;
 
 setInterval(async () => {
     try {
