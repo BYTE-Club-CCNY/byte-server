@@ -1,9 +1,7 @@
-import { Client } from "pg";
-import activateDb from "./db";
 import logger from "./utils/logger";
+import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
 import express from "express";
-import connectDB from "./connectDB";
 import checkDB, { secondsToMs } from "./dbChecker";
 
 const app = express();
@@ -23,7 +21,16 @@ setInterval(async () => {
 
 app.use((req: any, res: any, next: any) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
+
     next();
+});
+
+app.use("/projects", (req: any, res: any, next: any) => {
+    if (dbAval) {
+        projectsDB(req, res, next);
+    } else {
+        projectsLocal(req, res, next);
+    }
 });
 
 app.get("/", (req: any, res: any) => {
@@ -32,13 +39,13 @@ app.get("/", (req: any, res: any) => {
     ).status(200);
 });
 
-// app.use("/projects", projectsLocal);
-// app.use("/projects", projectsDB);
-
-// // any other route will return a 404
-// app.get("*", (req: any, res: any) => {
-//     res.status(404).json({ message: "Page not found. Invalid path or method provided to make this request." });
-// });
+// any other route will return a 404
+app.get("*", (req: any, res: any) => {
+    res.status(404).json({
+        message:
+            "Page not found. Invalid path or method provided to make this request.",
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);

@@ -8,8 +8,12 @@ import validate from "../middlewares/validate";
 
 const router: Router = Router();
 
-router.use(connectDB);
+// router.use(connectDB);
 router.use(express.json());
+router.use((req: any, res: any, next: any) => {
+    logger.info(`Received ${req.url} request for database projects`);
+    next();
+});
 
 router.get("/", async (req: any, res: any) => {
     try {
@@ -51,7 +55,7 @@ router.get("/get", async (req: any, res: any) => {
         const data: QueryResult = await queryDatabase(
             req.client,
             baseQuery,
-            values
+            values,
         );
         return res.status(200).send(data.rows);
     } catch {
