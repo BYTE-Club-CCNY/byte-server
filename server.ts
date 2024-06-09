@@ -3,11 +3,12 @@ import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
 import express from "express";
 import checkDB, { secondsToMs } from "./dbChecker";
+import cors from "cors";
 
-const app = express();
 const PORT = 3000;
 const INTERVAL = secondsToMs(5);
 const TIMEOUT = secondsToMs(2);
+const app = express();
 let dbAval: boolean = false;
 
 setInterval(async () => {
@@ -17,8 +18,10 @@ setInterval(async () => {
         console.error("Error:", e.message);
         dbAval = false;
     }
+    logger.info(`Database is ${dbAval ? "available" : "not available"}`);
 }, INTERVAL);
 
+app.use(cors());
 app.use((req: any, res: any, next: any) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
 

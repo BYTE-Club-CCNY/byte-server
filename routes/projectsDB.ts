@@ -1,14 +1,14 @@
 import { Router } from "express";
-import connectDB from "../connectDB";
 import express from "express";
 import logger from "../utils/logger";
 import { queryDatabase } from "./databaseFunctions";
-import { QueryResult } from "pg";
+import { Client, QueryResult } from "pg";
 import validate from "../middlewares/validate";
+import getDB from "../db";
 
 const router: Router = Router();
+const client: Client = await getDB();
 
-// router.use(connectDB);
 router.use(express.json());
 router.use((req: any, res: any, next: any) => {
     logger.info(`Received ${req.url} request for database projects`);
@@ -53,7 +53,7 @@ router.get("/get", async (req: any, res: any) => {
     // execute the query, making sure to provide the values for the filters
     try {
         const data: QueryResult = await queryDatabase(
-            req.client,
+            client,
             baseQuery,
             values,
         );
@@ -69,7 +69,7 @@ router.post("/add", validate, (req: any, res: any) => {
   INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
     try {
-        queryDatabase(req.client, query, values);
+        queryDatabase(client, query, values);
         return res.status(200).json({ message: "Project added successfully" });
     } catch (err: any) {
         return res.status(400).json({ message: err.message });
@@ -107,7 +107,7 @@ router.put("/update", validate, async (req: any, res: any) => {
     SET ${setClauses.join(", ")}
     WHERE name = $${values.length}`;
     try {
-        const result = await queryDatabase(req.client, query, values);
+        const result = await queryDatabase(client, query, values);
 
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Project not found" });
