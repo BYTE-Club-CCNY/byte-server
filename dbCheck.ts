@@ -10,7 +10,7 @@ async function checkDB(timeout: number) {
             await getDB();
             process.exit(0);
         } catch (e: any) {
-            console.error("Error:", e.message);
+            console.error("Error Connecting to DB:", e.message);
             process.exit(1);
         }
     }, timeout);
@@ -19,4 +19,4 @@ async function checkDB(timeout: number) {
 const args: string[] = process.argv;
 const timeout: number = parseInt(args[2]);
 
-checkDB(timeout);
+await checkDB(timeout);
