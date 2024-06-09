@@ -1,8 +1,8 @@
 //validate all fields and their types
 function validating(
     keys: string[],
-    values: any[],
-    requiredFields: any,
+    values: (string | number)[],
+    requiredFields: { [key: string]: string },
     res: any,
 ) {
     for (let i = 0; i < values.length; i++) {
