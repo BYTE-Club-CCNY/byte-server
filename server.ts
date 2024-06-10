@@ -4,6 +4,12 @@ import projectsDB from "./routes/projectsDB";
 import express from "express";
 import checkDB, { secondsToMs } from "./dbChecker";
 import cors from "cors";
+import http from 'http';
+import https from 'https';
+
+// const privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+// const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+// const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;
 const INTERVAL = secondsToMs(60 * 60); // 1 hr
@@ -54,4 +60,8 @@ app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`);
 });
 
-export default app;
+const httpServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(PORT);
+// httpsServer.listen(PORT+1);
