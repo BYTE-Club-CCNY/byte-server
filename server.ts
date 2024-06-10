@@ -56,10 +56,6 @@ app.get("*", (req: any, res: any) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
-});
-
 const httpServer = http.createServer(app);
 // const httpsServer = https.createServer(credentials, app);
 
