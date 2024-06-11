@@ -1,142 +1,66 @@
+import logger from "./utils/logger";
+import projectsLocal from "./routes/projectsLocal";
+import projectsDB from "./routes/projectsDB";
 import express from "express";
-import activateDb from "./db";
-import { readFile } from "fs";
-import winston from "winston";
+import checkDB, { secondsToMs } from "./dbChecker";
 import cors from "cors";
+import http from 'http';
+import https from 'https';
 
-// activateDb();
-const app = express();
+// const privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+// const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+// const credentials = {key: privateKey, cert: certificate};
+
 const PORT = 3000;
+const INTERVAL = secondsToMs(60 * 60); // 1 hr
+const TIMEOUT = secondsToMs(10);
+const app = express();
+let dbAval: boolean = true;
 
-const logger = winston.createLogger({
-  // Log only if level is less than (meaning more severe) or equal to this
-  level: "info",
-  // Use timestamp and printf to create a standard log format
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.printf(
-      (info) => `${info.timestamp} ${info.level}: ${info.message}`,
-    ),
-  ),
-  // Log to the console and a file
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: "logs/app.log" }),
-  ],
-});
+setInterval(async () => {
+    try {
+        dbAval = await checkDB(TIMEOUT);
+    } catch (e: any) {
+        console.error("Error:", e.message);
+        dbAval = false;
+    }
+    logger.info(`Database is ${dbAval ? "available" : "not available"}`);
+}, INTERVAL);
 
 app.use(cors());
-
-app.use((req, res, next) => {
-  // Log an info message for each incoming request
-  logger.info(`Received a ${req.method} request for ${req.url}`);
-  next();
+app.use((req: any, res: any, next: any) => {
+    logger.info(`Received a ${req.method} request for ${req.url}`);
+    next();
 });
 
-app.get("/", (req, res) => {
-  res.send("BYTE @ CCNY").status(200);
-});
-
-app.get("/projects", (req, res) => {
-  if (req.query) {
-    logger.warn("Query parameters ignored");
-  }
-
-  readFile("./data.json", "utf8", (error, content) => {
-    if (error) {
-      logger.error("Error reading data.json");
-      return res.status(500).send("Error reading file");
+app.use("/projects", (req: any, res: any, next: any) => {
+    if (dbAval) {
+        projectsDB(req, res, next);
+    } else {
+        projectsLocal(req, res, next);
     }
-    return res.status(200).json(JSON.parse(content));
-  });
 });
 
-app.get("/projects/team", (req, res) => {
-  if (!req.query.team) {
-    logger.error("Team query parameter missing");
-    res.status(400).send("Missing team");
-    return;
-  }
+app.get("/", (req: any, res: any) => {
+    res.send(
+        `BYTE @ CCNY. The database is ${dbAval ? "available" : "not available"}`,
+    ).status(200);
+});
 
-  readFile("./data.json", "utf8", (error, content) => {
-    if (error) {
-      logger.error("Error reading data.json");
-      return res.status(500).send("Error reading file");
-    }
-    const jsonData = JSON.parse(content);
-    const filteredData = jsonData.filter((item: any) => {
-      const itemData = item.team.toString().toLowerCase().split(",");
-      const queryData = req.query.team?.toString().toLowerCase().split(",");
-      return queryData?.every((query) => itemData.includes(query));
+// any other route will return a 404
+app.get("*", (req: any, res: any) => {
+    res.status(404).json({
+        message:
+            "Page not found. Invalid path or method provided to make this request.",
     });
-    if (filteredData.length === 0) {
-      logger.warn("No projects found");
-      return res
-        .status(404)
-        .send("The data you are looking for does not exist");
-    }
-    return res.status(200).send(filteredData);
-  });
 });
 
-app.get("/projects/cohort", (req, res) => {
-  if (!req.query.cohort) {
-    logger.error("Cohort query parameter missing");
-    res.send("Missing cohort").status(400);
-    return;
-  }
+// app.listen(PORT, () => {
+//     console.log(`listening on port ${PORT}`);
+// });
 
-  readFile("data.json", "utf8", (err, data) => {
-    if (err) {
-      logger.error("Error reading data.json");
-      res.send("Error reading file").status(500);
-    }
-    const jsonData = JSON.parse(data);
-    const filteredData = jsonData.filter((item: any) => {
-      const itemData = item.cohort.toString().toLowerCase().split(",");
-      const queryData = req.query.cohort?.toString().toLowerCase().split(",");
-      console.log(itemData, queryData);
-      return itemData.some((item: any) => queryData?.includes(item));
-    });
+const httpServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
 
-    if (filteredData.length === 0) {
-      logger.warn("No projects found");
-      res.send("No projects found").status(404);
-      return;
-    }
-    res.send(filteredData).status(200);
-  });
-});
-
-app.get("/projects/name", (req, res) => {
-  if (!req.query.name) {
-    logger.error("Name query parameter missing");
-    res.send("Missing project name").status(400);
-    return;
-  }
-
-  readFile("data.json", "utf8", (err, data) => {
-    if (err) {
-      logger.error("Error reading data.json");
-      res.send("Error reading file").status(500);
-    }
-    const jsonData = JSON.parse(data);
-    const filteredData = jsonData.filter((item: any) => {
-      const itemData = item.name.toString().toLowerCase();
-      const queryData = req.query.name?.toString().toLowerCase().split(",");
-      return queryData?.some((query) => itemData.includes(query));
-    });
-    if (filteredData.length === 0) {
-      logger.warn("No projects found");
-      res.send("No projects found").status(404);
-      return;
-    }
-    res.send(filteredData).status(200);
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
-
-export default app;
+httpServer.listen(PORT);
+// httpsServer.listen(PORT+1);
