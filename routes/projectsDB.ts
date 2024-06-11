@@ -7,11 +7,12 @@ import validate from "../middlewares/validate";
 import getDB from "../db";
 
 const router: Router = Router();
-const client: Client = await getDB();
+let client: Client;
 
 // router.use(express.json());
-router.use((req: any, res: any, next: any) => {
+router.use(async (req: any, res: any, next: any) => {
     logger.info(`Received ${req.url} request for database projects`);
+    client = await getDB();
     next();
 });
 
