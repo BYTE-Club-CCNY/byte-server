@@ -8,6 +8,7 @@ import getDB from "../db";
 
 const router: Router = Router();
 
+router.use(express.json());
 
 async function startServer() {
     const client: Client = await getDB();
