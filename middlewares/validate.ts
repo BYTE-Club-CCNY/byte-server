@@ -1,7 +1,7 @@
 //validate all fields and their types
 function validating(
     keys: string[],
-    values: (string | number)[],
+    values: any,
     requiredFields: { [key: string]: string },
     res: any,
 ) {
@@ -40,7 +40,7 @@ const validate = (req: any, res: any, next: any) => {
         topic: "object",
     };
     const values = Object.values(req.body);
-    const keys = Object.keys(req.body).toString().toLowerCase().split(",");
+    const keys = Object.keys(req.body);
 
     if (req.method === "POST") {
         //initial check for empty request body
