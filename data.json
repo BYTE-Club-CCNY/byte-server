@@ -18,7 +18,8 @@
     "topic": [
       "AI",
       "ML"
-    ]
+    ],
+    "uuid": "80eb8a48-9172-4f6f-87ca-4ae89de1938c"
   },
   {
     "name": "Stockbros",
@@ -40,7 +41,8 @@
     "topic": [
       "Data Science",
       "Finance"
-    ]
+    ],
+    "uuid": "5dca7d6e-5131-434f-9eb9-5670a820a260"
   },
   {
     "name": "TrackLeet",
@@ -65,7 +67,8 @@
       "Chrome Extension",
       "Web Development",
       "Authentication"
-    ]
+    ],
+    "uuid": "e00bfd77-58a4-4d2f-a56e-6fc5b8280454"
   },
   {
     "name": "Don't Be Alarmed",
@@ -87,7 +90,8 @@
     "cohort": "Spring 2024",
     "topic": [
       "Android App Development"
-    ]
+    ],
+    "uuid": "9fe8f025-d0a4-4a88-abb5-184da85db827"
   },
   {
     "name": "BYTE Website",
@@ -111,7 +115,8 @@
     "cohort": "Summer 2024",
     "topic": [
       "Web Development"
-    ]
+    ],
+    "uuid": "d78df4b2-4ad6-4c0e-82b1-31473c4ef9f2"
   },
   {
     "name": "BYTE Server",
@@ -140,6 +145,7 @@
       "Server Development",
       "API",
       "Postgres"
-    ]
+    ],
+    "uuid": "52a901bf-685a-4320-9336-5ce7785e4f18"
   }
 ]
