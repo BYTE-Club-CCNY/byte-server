@@ -13,7 +13,7 @@ import https from 'https';
 
 const PORT = 3000;
 const INTERVAL = secondsToMs(60 * 60); // 1 hr
-const TIMEOUT = secondsToMs(30);
+const TIMEOUT = secondsToMs(10);
 const app = express();
 let dbAval: boolean = true;
 
