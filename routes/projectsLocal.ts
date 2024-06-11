@@ -6,11 +6,16 @@ import path from "path";
 const router = Router();
 const FILE_PATH: string = path.resolve(__dirname, "../data.json");
 
+router.use((req: any, res: any, next: any) => {
+    logger.info(`Received ${req.url} request for local projects`);
+    next();
+});
+
 router.get("/", (req: any, res: any) => {
     if (req.query) {
         logger.warn("Query parameters ignored");
     }
-    
+
     readFile(FILE_PATH, "utf8", (error: any, content: any) => {
         if (error) {
             logger.error("Error reading data.json");
