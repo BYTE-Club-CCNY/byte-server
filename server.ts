@@ -13,7 +13,7 @@ import https from 'https';
 
 const PORT = 3000;
 const INTERVAL = secondsToMs(60 * 60); // 1 hr
-const TIMEOUT = secondsToMs(10);
+const TIMEOUT = secondsToMs(30);
 const app = express();
 let dbAval: boolean = true;
 
@@ -30,7 +30,6 @@ setInterval(async () => {
 app.use(cors());
 app.use((req: any, res: any, next: any) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
-
     next();
 });
 
