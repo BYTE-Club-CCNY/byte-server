@@ -36,10 +36,7 @@ setInterval(async () => {
     logger.info(`Database is ${dbAval ? "available" : "not available"}`);
 }, INTERVAL);
 
-// app.use(cors( // TODO: do this correctly
-//     "byteccny",
-//     "localhost:3000";
-// ));
+app.use(cors());
 app.use((req: any, res: any, next: any) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
