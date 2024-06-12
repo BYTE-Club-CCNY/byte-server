@@ -4,19 +4,30 @@ async function getDB() {
     await client.connect();
 }
 
-async function checkDB(timeout: number) {
-    setTimeout(async () => {
+function runWithTimeout(fn: () => void, timeout: number, interval: number = 100) {
+  return new Promise<void>((resolve, reject) => {
+    const startTime = Date.now();
+
+    const handle = setInterval(() => {
+      const elapsedTime = Date.now() - startTime;
+      
+      if (elapsedTime >= timeout) {
+        clearInterval(handle);
+        resolve();
+      } else {
         try {
-            await getDB();
-            process.exit(0);
-        } catch (e: any) {
-            console.error("Error Connecting to DB:", e.message);
-            process.exit(1);
+          fn();
+        } catch (error) {
+          clearInterval(handle);
+          reject(error);
         }
-    }, timeout);
+      }
+    }, interval);
+  });
 }
+
 
 const args: string[] = process.argv;
 const timeout: number = parseInt(args[2]);
 
-await checkDB(timeout);
+await runWithTimeout(getDB, timeout);
