@@ -17,6 +17,15 @@ const TIMEOUT = secondsToMs(10);
 const app = express();
 let dbAval: boolean = true;
 
+// initial check
+try{
+    console.log(`Please wait ${TIMEOUT/1000}s for the database to connect`)
+    dbAval = await checkDB(TIMEOUT);
+} catch (e: any) {
+    dbAval = false;
+}
+
+// routine
 setInterval(async () => {
     try {
         dbAval = await checkDB(TIMEOUT);
@@ -27,7 +36,10 @@ setInterval(async () => {
     logger.info(`Database is ${dbAval ? "available" : "not available"}`);
 }, INTERVAL);
 
-app.use(cors());
+// app.use(cors( // TODO: do this correctly
+//     "byteccny",
+//     "localhost:3000";
+// ));
 app.use((req: any, res: any, next: any) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
