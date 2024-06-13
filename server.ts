@@ -19,8 +19,9 @@ let dbAval: boolean = true;
 
 // initial check
 try{
-    console.log(`Please wait ${TIMEOUT/1000}s for the database to connect`)
+    logger.info(`Please wait ${TIMEOUT/1000}s for the database to connect`)
     dbAval = await checkDB(TIMEOUT);
+    logger.info("Server is up")
 } catch (e: any) {
     dbAval = false;
 }
