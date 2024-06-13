@@ -5,6 +5,7 @@ import { queryDatabase } from "./databaseFunctions";
 import { Client, QueryResult } from "pg";
 import validate from "../middlewares/validate";
 import getDB from "../db";
+import synchronizeLocal from "../utils/synchronize";
 
 const router: Router = Router();
 
@@ -73,6 +74,7 @@ async function startServer() {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
         try {
             queryDatabase(client, query, values);
+            synchronizeLocal(client);
             return res.status(200).json({ message: "Project added successfully" });
         } catch (err: any) {
             return res.status(400).json({ message: err.message });
@@ -111,6 +113,7 @@ async function startServer() {
         WHERE name = $${values.length}`;
         try {
             const result = await queryDatabase(client, query, values);
+            synchronizeLocal(client);
     
             if (result.rowCount === 0) {
                 return res.status(404).json({ message: "Project not found" });
