@@ -1,33 +1,37 @@
 import client from "./db.config";
 
-async function getDB() {
-    await client.connect();
+async function getDB(): Promise<void> {
+	await client.connect();
+	await client.end()
 }
 
-function runWithTimeout(fn: () => void, timeout: number, interval: number = 100) {
-  return new Promise<void>((resolve, reject) => {
-    const startTime = Date.now();
+function runWithTimeout(fn: () => Promise<void>, timeout: number, interval: number) : Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        const startTime = Date.now();
 
-    const handle = setInterval(() => {
-      const elapsedTime = Date.now() - startTime;
-      
-      if (elapsedTime >= timeout) {
-        clearInterval(handle);
-        resolve();
-      } else {
-        try {
-          fn();
-        } catch (error) {
-          clearInterval(handle);
-          reject(error);
-        }
-      }
-    }, interval);
-  });
+        const handle = setInterval(async () => {
+            const elapsedTime = Date.now() - startTime;
+
+            if (elapsedTime >= timeout) {
+                clearInterval(handle);
+                resolve();
+            } else {
+                try {
+                    await fn();
+                    clearInterval(handle);
+                    resolve();
+                } catch (error) {
+                    clearInterval(handle);
+                    reject(error);
+                }
+            }
+        }, interval);
+    });
 }
 
-
-const args: string[] = process.argv;
-const timeout: number = parseInt(args[2]);
-
-await runWithTimeout(getDB, timeout);
+runWithTimeout(getDB, parseInt(process.argv[2]), parseInt(process.argv[2]))
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
