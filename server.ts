@@ -8,8 +8,8 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 
-const privateKey  = fs.readFileSync('/etc/letsencrypt/live/test.byteccny.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/test.byteccny.com/cert.pem', 'utf8');
+const privateKey  = fs.readFileSync('cert/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('cert/cert.pem', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;

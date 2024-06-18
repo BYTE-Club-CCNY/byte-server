@@ -1,5 +1,7 @@
 .vscode/
 bun.lockb
+*.pem
+cert/
 
 # Logs
 logs
