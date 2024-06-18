@@ -6,10 +6,11 @@ import checkDB, { secondsToMs } from "./dbChecker";
 import cors from "cors";
 import http from 'http';
 import https from 'https';
+import fs from 'fs';
 
-// const privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
-// const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
-// const credentials = {key: privateKey, cert: certificate};
+const privateKey  = fs.readFileSync('/etc/letsencrypt/live/test.byteccny.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/test.byteccny.com/cert.pem', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;
 const INTERVAL = secondsToMs(60 * 60); // 1 hr
@@ -65,12 +66,8 @@ app.get("*", (req: any, res: any) => {
     });
 });
 
-// app.listen(PORT, () => {
-//     console.log(`listening on port ${PORT}`);
-// });
-
 const httpServer = http.createServer(app);
-// const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(PORT);
-// httpsServer.listen(PORT+1);
+httpsServer.listen(PORT+1);
