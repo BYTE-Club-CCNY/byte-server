@@ -68,11 +68,11 @@ async function startServer() {
     });
     
     router.post("/add", validate, async (req: any, res: any) => {
-        const values: Array<any> = Object.values(req.body);
         const query = `
       INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
         try {
+            const values: Array<any> = Object.values(req.body);
             await queryDatabase(client, query, values);
             await synchronizeLocal(client);
             return res.status(200).json({ message: "Project added successfully" });
