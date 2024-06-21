@@ -4,7 +4,10 @@ export function secondsToMs(d: number) {
     return d * 1000;
 }
 
-// threading should happen at top level of server "setInterval"
+/**
+ * @param TIMEOUT seconds till return false
+ * @returns true if DB avail, false otherwise
+ */
 async function checkDB(TIMEOUT: number): Promise<boolean> {
     return new Promise((resolve, reject) => {
         let dbAval: boolean = false;
