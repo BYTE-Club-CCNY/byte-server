@@ -8,9 +8,9 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 
-const privateKey  = fs.readFileSync('cert/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('cert/cert.pem', 'utf8');
-const credentials = {key: privateKey, cert: certificate};
+// const privateKey  = fs.readFileSync('cert/privkey.pem', 'utf8');
+// const certificate = fs.readFileSync('cert/cert.pem', 'utf8');
+// const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;
 const INTERVAL = secondsToMs(60 * 60); // 1 hr
@@ -67,7 +67,7 @@ app.get("*", (req: any, res: any) => {
 });
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
+// const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(PORT);
-httpsServer.listen(PORT+1);
+// httpsServer.listen(PORT+1);

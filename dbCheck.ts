@@ -35,3 +35,6 @@ runWithTimeout(getDB, parseInt(process.argv[2]), parseInt(process.argv[2]))
         console.error(error);
         process.exit(1);
     });
+
+
+export default runWithTimeout;
