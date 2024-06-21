@@ -1,20 +1,19 @@
 import client from './db.config'; 
+import checkDB from 'dbChecker';
 
-let isActive = false; 
 const getDB = async () => { 
 	console.log("Connecting to Database ..."); 
-	if (isActive) { 
-		console.log("Database already connected"); 
-		return client; 
-	} 
-	try { 
-		await client.connect(); 
-		console.log("Database connected"); 
-		isActive = true; 
-		return client; 
-	} catch (err: any) { 
-		return client; 
-	} 
+	
+	if(client.connected){
+		try { 
+			await client.connect(); 
+			console.log("Database connected"); 
+			return client; 
+		} catch (err: any) { 
+			throw Error("Client Not Found"); 
+		} 	
+	}
+	return client;
 }  
 
 export default getDB;
