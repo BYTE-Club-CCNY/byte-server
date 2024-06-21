@@ -13,8 +13,11 @@ const client = new Client({
 });
 
 client.on("end", () => console.log("Client has disconnected"));
-client.on("error", (err) =>
-    console.error("Unexpected error on idle client", err),
-);
+client.on("error", (err) => console.error("Error:", err));
+client.on("notice", (msg) => console.warn("Notice:", msg));
+client.on("notification", (msg) => {
+    console.log("Notification:", msg);
+    console.log("Payload:", msg.payload);
+})
 
 export default client;
