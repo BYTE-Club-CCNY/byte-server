@@ -6,6 +6,7 @@ import { Client, QueryResult } from "pg";
 import validate from "../middlewares/validate";
 import getDB from "../db";
 import synchronizeLocal from "../utils/synchronize";
+import authorize from "middlewares/authorize";
 
 const router: Router = Router();
 
@@ -67,7 +68,8 @@ async function startServer() {
         }
     });
     
-    router.post("/add", validate, async (req: any, res: any) => {
+    router.post("/add", authorize(client), validate, async (req: any, res: any) => {
+        const values: Array<any> = Object.values(req.body);
         const query = `
       INSERT INTO projects (name, "short-desc", "long-desc", team, link, image, "tech-stack", cohort, topic)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
@@ -81,7 +83,7 @@ async function startServer() {
         }
     });
     
-    router.put("/update", validate, async (req: any, res: any) => {
+    router.put("/update", authorize(client), validate, async (req: any, res: any) => {
         const projectName = req.query.name;
     
         if (!projectName) {
