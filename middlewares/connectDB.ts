@@ -1,4 +1,4 @@
-import getDB from "../db";
+import getDB from "../database/db";
 import logger from "../utils/logger";
 
 const connectDB = async (req: any, res: any, next: any) => {

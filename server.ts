@@ -2,7 +2,7 @@ import logger from "./utils/logger";
 import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
 import express from "express";
-import checkDB, { secondsToMs } from "./dbChecker";
+import checkDB, { secondsToMs } from "./database/dbChecker";
 import cors from "cors";
 import http from 'http';
 import https from 'https';
@@ -19,13 +19,15 @@ const app = express();
 let dbAval: boolean = true;
 
 // initial check
-try{
-    logger.info(`Please wait ${TIMEOUT/1000}s for the database to connect`)
-    dbAval = await checkDB(TIMEOUT);
-    logger.info("Server is up")
-} catch (e: any) {
-    dbAval = false;
-}
+(async () => {
+    try {
+        logger.info(`Please wait ${TIMEOUT / 1000}s for the database to connect`);
+        dbAval = await checkDB(TIMEOUT);
+        logger.info("Server is up");
+    } catch (e: any) {
+        dbAval = false;
+    }
+})();
 
 // routine
 setInterval(async () => {

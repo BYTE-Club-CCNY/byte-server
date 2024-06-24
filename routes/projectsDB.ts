@@ -4,7 +4,7 @@ import logger from "../utils/logger";
 import { queryDatabase } from "./databaseFunctions";
 import { Client, QueryResult } from "pg";
 import validate from "../middlewares/validate";
-import getDB from "../db";
+import getDB from "../database/db";
 import synchronizeLocal from "../utils/synchronize";
 import authorize from "middlewares/authorize";
 
