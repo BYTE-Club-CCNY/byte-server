@@ -1,7 +1,7 @@
 import { queryDatabase } from "routes/databaseFunctions";
 import { Client } from "pg";
 
-const authorize = function (client: Client) {
+const authorize = function () {
     return async (req: any, res: any, next: any) => {
         const name = req.headers.name.toLowerCase();
         const key = req.headers.authorization?.split(" ")[1];
@@ -15,7 +15,7 @@ const authorize = function (client: Client) {
         }
 
         try {
-            const result = await queryDatabase(client, query.text, query.values);
+            const result = await queryDatabase(req.client, query.text, query.values);
             if (result.rows.length === 0) {
                 return res.status(401).json({ message: "Invalid name or key!" });
             }

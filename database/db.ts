@@ -5,6 +5,7 @@ import client from './db.config';
 // if no connection can be made, return null
 const getDB = async () => { 
 	console.log("Connecting to Database ..."); 
+	if(client._connected) return client;
 	try{
 		await client.connect()
 		console.log("Connected to Database");

@@ -2,7 +2,7 @@ import logger from "./utils/logger";
 import projectsLocal from "./routes/projectsLocal";
 import projectsDB from "./routes/projectsDB";
 import express from "express";
-import checkDB, { secondsToMs } from "./database/dbChecker";
+import checkDB from "./database/dbChecker";
 import cors from "cors";
 import http from 'http';
 import https from 'https';
@@ -13,17 +13,17 @@ import fs from 'fs';
 // const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;
-const INTERVAL = secondsToMs(60 * 60); // 1 hr
-const TIMEOUT = secondsToMs(10);
+// const INTERVAL = secondsToMs(10); // 1 hr
+// const TIMEOUT = secondsToMs(10);
 const app = express();
 let dbAval: boolean = true;
 
 // initial check
 (async () => {
     try {
-        logger.info(`Please wait ${TIMEOUT / 1000}s for the database to connect`);
-        dbAval = await checkDB(TIMEOUT);
-        logger.info("Server is up");
+        // logger.info(`Please wait ${TIMEOUT / 1000}s for the database to connect`);
+        dbAval = await checkDB();
+        logger.info(`Server is up, database is ${dbAval ? "up" : "not up"}`);
     } catch (e: any) {
         dbAval = false;
     }
@@ -32,13 +32,13 @@ let dbAval: boolean = true;
 // routine 
 setInterval(async () => {
     try { 
-        dbAval = await checkDB(TIMEOUT);
+        dbAval = await checkDB();
     } catch (e: any) {
         console.error("Error:", e.message);
         dbAval = false;
     }
     logger.info(`Database is ${dbAval ? "available" : "not available"}`);
-}, INTERVAL);
+}, 100000);
 
 app.use(cors());
 app.use((req: any, res: any, next: any) => {

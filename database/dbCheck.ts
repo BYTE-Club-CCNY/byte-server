@@ -1,12 +1,11 @@
+import getDB from "./db";
 import client from "./db.config";
-
-async function getDB() {
-    await client.connect();
-}
 
 function runWithTimeout(fn: () => void, timeout: number, interval: number = 100) {
   return new Promise<void>((resolve, reject) => {
     const startTime = Date.now();
+
+    fn();
 
     const handle = setInterval(() => {
       const elapsedTime = Date.now() - startTime;
@@ -14,13 +13,13 @@ function runWithTimeout(fn: () => void, timeout: number, interval: number = 100)
       if (elapsedTime >= timeout) {
         clearInterval(handle);
         resolve();
-      } else {
-        try {
-          fn();
-        } catch (error) {
-          clearInterval(handle);
-          reject(error);
-        }
+      // } else {
+      //   try {
+      //     fn();
+      //   } catch (error) {
+      //     clearInterval(handle);
+      //     reject(error);
+      //   }
       }
     }, interval);
   });
