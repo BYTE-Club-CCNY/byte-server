@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "mocha --recursive",
-    "serve": "nodemon server.ts"
+    "serve": "bun run --watch server.ts"
   },
   "dependencies": {
     "@types/chai": "^4.3.16",
