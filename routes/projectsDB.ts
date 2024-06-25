@@ -12,6 +12,8 @@ const router: Router = Router();
 
 router.use(express.json());
 
+// TODO: Switch to using getDB() function instead of startServer().
+
 async function startServer() {
     const client: Client = await getDB();
     
