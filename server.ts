@@ -29,9 +29,9 @@ let dbAval: boolean = true;
     }
 })();
 
-// routine
+// routine 
 setInterval(async () => {
-    try {
+    try { 
         dbAval = await checkDB(TIMEOUT);
     } catch (e: any) {
         console.error("Error:", e.message);
