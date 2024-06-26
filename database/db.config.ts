@@ -3,7 +3,7 @@ import { Client } from "pg";
 import logger from "utils/logger";
 dotenv.config();
 
-const secondsToMs = (seconds: number): number => {
+export const secondsToMs = (seconds: number): number => {
     return seconds * 1000;
 };
 

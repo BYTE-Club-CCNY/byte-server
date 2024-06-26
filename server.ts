@@ -1,18 +1,20 @@
-import logger from "./utils/logger";
-import projectsLocal from "./routes/projectsLocal";
-import projectsDB from "./routes/projectsDB";
-import express from "express";
-import checkDB from "./database/dbChecker";
 import cors from "cors";
+import express from "express";
+import fs from "fs";
 import http from "http";
 import https from "https";
-import fs from "fs";
+import { secondsToMs } from "./database/db.config";
+import checkDB from "./database/dbChecker";
+import projectsDB from "./routes/projectsDB";
+import projectsLocal from "./routes/projectsLocal";
+import logger from "./utils/logger";
 
 const privateKey = fs.readFileSync("cert/privkey.pem", "utf8");
 const certificate = fs.readFileSync("cert/cert.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
-const PORT = 3000;
+const INTERVAL: number = secondsToMs(60 * 60);
+const PORT: number = 3000;
 const app = express();
 let dbAval: boolean = true;
 
@@ -35,7 +37,7 @@ setInterval(async () => {
         dbAval = false;
     }
     logger.info(`Database is ${dbAval ? "available" : "not available"}`);
-}, 100000);
+}, INTERVAL);
 
 app.use(cors());
 app.use((req: any, res: any, next: any) => {
