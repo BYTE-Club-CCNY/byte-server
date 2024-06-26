@@ -13,7 +13,7 @@ const router: Router = Router();
 
 router.use(express.json());
 router.use(connectDB);
-    
+
 router.use((req: any, res: any, next: any) => {
     logger.info(`Received ${req.url} request for database projects`);
     next();

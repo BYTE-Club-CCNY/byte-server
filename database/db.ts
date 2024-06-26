@@ -1,8 +1,5 @@
 import client from './db.config'; 
 
-// attempt to establish connection
-// if exception of connection already established exists, return client
-// if no connection can be made, return null
 const getDB = async () => { 
 	console.log("Connecting to Database ..."); 
 	if(client._connected || client._connecting) return client;

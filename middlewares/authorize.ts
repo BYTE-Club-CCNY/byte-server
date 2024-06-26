@@ -1,5 +1,4 @@
 import { queryDatabase } from "routes/databaseFunctions";
-import { Client } from "pg";
 
 const authorize = function () {
     return async (req: any, res: any, next: any) => {

@@ -1,9 +1,9 @@
 import getDB from "./db";
 
-async function checkDB(){
+async function checkDB() {
     const db = await getDB();
 
-    if(db) {
+    if (db) {
         await db.end();
         return true;
     }

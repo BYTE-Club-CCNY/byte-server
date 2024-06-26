@@ -8,19 +8,15 @@ function validating(
     for (let i = 0; i < values.length; i++) {
         //initial check if the field is a required field
         if (!(keys[i] in requiredFields)) {
-            return res
-                .status(400)
-                .json({
-                    message: `Please insert a valid field name, ${keys[i]} is invalid`,
-                });
+            return res.status(400).json({
+                message: `Please insert a valid field name, ${keys[i]} is invalid`,
+            });
         }
         //check for the correct typing
         if (typeof values[i] !== requiredFields[keys[i]]) {
-            return res
-                .status(400)
-                .json({
-                    message: `Please insert the correct typing for ${keys[i]}, it should be a ${requiredFields[keys[i]] === "object" ? "array of strings" : requiredFields[keys[i]]}!`,
-                });
+            return res.status(400).json({
+                message: `Please insert the correct typing for ${keys[i]}, it should be a ${requiredFields[keys[i]] === "object" ? "array of strings" : requiredFields[keys[i]]}!`,
+            });
         }
     }
     // if no response is sent meaning all validations passed, return false at the end of the function
@@ -45,19 +41,15 @@ const validate = (req: any, res: any, next: any) => {
     if (req.method === "POST") {
         //initial check for empty request body
         if (Object.keys(req.body).length === 0) {
-            return res
-                .status(400)
-                .json({
-                    message: "Please insert a object with all required fields!",
-                });
+            return res.status(400).json({
+                message: "Please insert a object with all required fields!",
+            });
         }
         if (keys.length !== 9) {
-            return res
-                .status(400)
-                .json({
-                    message:
-                        "Please insert all required fields, you are missing some fields!",
-                });
+            return res.status(400).json({
+                message:
+                    "Please insert all required fields, you are missing some fields!",
+            });
         } else {
             if (validating(keys, values, requiredFields, res)) {
                 return;

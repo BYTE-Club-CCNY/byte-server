@@ -4,9 +4,9 @@ import projectsDB from "./routes/projectsDB";
 import express from "express";
 import checkDB from "./database/dbChecker";
 import cors from "cors";
-import http from 'http';
-import https from 'https';
-import fs from 'fs';
+import http from "http";
+import https from "https";
+import fs from "fs";
 
 // const privateKey  = fs.readFileSync('cert/privkey.pem', 'utf8');
 // const certificate = fs.readFileSync('cert/cert.pem', 'utf8');
@@ -26,9 +26,9 @@ let dbAval: boolean = true;
     }
 })();
 
-// routine 
+// routine
 setInterval(async () => {
-    try { 
+    try {
         dbAval = await checkDB();
     } catch (e: any) {
         console.error("Error:", e.message);
