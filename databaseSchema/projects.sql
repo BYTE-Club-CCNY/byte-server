@@ -3,10 +3,10 @@ CREATE TABLE projects (
     name VARCHAR NOT NULL,
     "short-desc" VARCHAR NOT NULL,
     "long-desc" VARCHAR,
-    team TEXT[],  
+    team TEXT[],
     link VARCHAR,
     image VARCHAR,
     "tech-stack" TEXT[],
     cohort VARCHAR,
-    topic TEXT[] 
+    topic TEXT[]
 );
