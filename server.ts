@@ -13,15 +13,12 @@ import fs from 'fs';
 // const credentials = {key: privateKey, cert: certificate};
 
 const PORT = 3000;
-// const INTERVAL = secondsToMs(10); // 1 hr
-// const TIMEOUT = secondsToMs(10);
 const app = express();
 let dbAval: boolean = true;
 
 // initial check
 (async () => {
     try {
-        // logger.info(`Please wait ${TIMEOUT / 1000}s for the database to connect`);
         dbAval = await checkDB();
         logger.info(`Server is up, database is ${dbAval ? "up" : "not up"}`);
     } catch (e: any) {
