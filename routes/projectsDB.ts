@@ -62,8 +62,10 @@ router.get("/get", async (req: any, res: any) => {
             values,
         );
         return res.status(200).send(data.rows);
-    } catch {
-        return res.status(500).json({ message: "Error retrieving data" });
+    } catch (error: any) {
+        return res
+            .status(500)
+            .json({ message: `Error retrieving data. ${error.toString()}` });
     }
 });
 
