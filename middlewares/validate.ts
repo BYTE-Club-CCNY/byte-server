@@ -1,5 +1,5 @@
 //validate all fields and their types
-function validating(
+function check_validate(
     keys: string[],
     values: any,
     requiredFields: { [key: string]: string },
@@ -19,8 +19,8 @@ function validating(
             });
         }
     }
-    // if no response is sent meaning all validations passed, return false at the end of the function
-    return false;
+
+    return true;
 }
 
 const validate = (req: any, res: any, next: any) => {
@@ -47,21 +47,16 @@ const validate = (req: any, res: any, next: any) => {
     }
     
 
-    if (req.method === "POST") {
-        if (keys.length !== 9) {
-            return res.status(400).json({
-                message:
-                    "Please insert all required fields, you are missing some fields!",
-            });
-        } else {
-            if (validating(keys, values, requiredFields, res)) {
-                return;
-            }
-        }
-    } else {
-        return (validating(keys, values, requiredFields, res))
+    if (req.method === "POST" && keys.length !== 9) {
+        return res.status(400).json({
+            message:
+                "Please insert all required fields, you are missing some fields!",
+        });
     }
-    next();
-};
+    if (check_validate(keys, values, requiredFields, res)) {
+        next();
+    } else {
+        return;
+    }};
 
 export default validate;
