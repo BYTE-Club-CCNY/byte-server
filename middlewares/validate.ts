@@ -25,6 +25,7 @@ function validating(
 
 const validate = (req: any, res: any, next: any) => {
     const requiredFields = {
+        uid: "string",
         name: "string",
         "short-desc": "string",
         "long-desc": "string",
@@ -38,13 +39,15 @@ const validate = (req: any, res: any, next: any) => {
     const values = Object.values(req.body);
     const keys = Object.keys(req.body);
 
+    //initial check for empty request body
+    if (Object.keys(req.body).length === 0) {
+        return res.status(400).json({
+            message: "Please insert a object to update! Got an empty object",
+        });
+    }
+    
+
     if (req.method === "POST") {
-        //initial check for empty request body
-        if (Object.keys(req.body).length === 0) {
-            return res.status(400).json({
-                message: "Please insert a object with all required fields!",
-            });
-        }
         if (keys.length !== 9) {
             return res.status(400).json({
                 message:
@@ -56,16 +59,7 @@ const validate = (req: any, res: any, next: any) => {
             }
         }
     } else {
-        //initial check for empty request body
-        if (Object.keys(req.body).length === 0) {
-            return res
-                .status(400)
-                .json({ message: "Please insert a object to update!" });
-        } else {
-            if (validating(keys, values, requiredFields, res)) {
-                return;
-            }
-        }
+        return (validating(keys, values, requiredFields, res))
     }
     next();
 };
