@@ -7,8 +7,12 @@ Server is built with Node.js and Express. Provides endpoints for managing a coll
 ## How to use
 Creating, Reading and Updating can be done from the database (default approach) endpoints. Only reading can be done for the local JSON file.
 
-## Endpoints for DB
+## AUTH
+In order to `POST` or `PUT` data to the database, you must provide **Basic Auth**. *Only system admins and active developers have access to this.* 
+- Username is your name (case doesn't matter)
+- Password is your API Key provided
 
+## Endpoints for DB
 ### Get projects
 `/projects/get`
 
@@ -22,6 +26,9 @@ Filters include:
 Filters are stackable, meaning you can do something similar to:  
 `/projects/get?team=John&cohort=1&team=Jane`  
 This will return all projects that have John **AND** Jane in their team and are in cohort 1. You can stack as many filters as you want but be aware that the more filters you add, the more specific the query will be, meaning it might return no results.
+
+*Tip:* To get all projects leave `get` as blank
+
 
 ### Post new projects
 `/projects/add`

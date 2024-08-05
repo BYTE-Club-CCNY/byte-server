@@ -31,6 +31,7 @@ const authorize = function () {
             if (result.rows.length === 0) {
                 return res.status(401).json({ message: "Invalid name or key!" });
             }
+
             next();
         }
         catch (e: any) {
