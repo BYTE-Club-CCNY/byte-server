@@ -1,17 +1,30 @@
 import { queryDatabase } from "routes/databaseFunctions";
 
 const authorize = function () {
+    // auth bearer token
+    const getBasicAuthCredentials = (req: any) => {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Basic ')) {
+            throw new Error('Missing or invalid Authorization header');
+        }
+    
+        const base64Credentials = authHeader.split(' ')[1];
+        const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+        const [username, password] = credentials.split(':');
+    
+        return { username, password };
+    };
+
     return async (req: any, res: any, next: any) => {
         try {
-            const name = req.headers.name.toLowerCase();
-            const key = req.headers.authorization?.split(" ")[1];
+            const { username: name, password: key } = getBasicAuthCredentials(req);
             const query = {
                 text: "SELECT * FROM apikey WHERE name = $1 AND apikey = $2",
                 values: [name, key]
             }
 
             if (!name || !key) {
-                return res.status(400).json({ message: "Please enter your name and key before accessing the database!" });
+                return res.status(400).json({ message: "Please enter your name and key in auth!" });
             }
 
             const result = await queryDatabase(req.client, query.text, query.values);
