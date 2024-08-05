@@ -20,7 +20,7 @@ const authorize = function () {
             const { username: name, password: key } = getBasicAuthCredentials(req);
             const query = {
                 text: "SELECT * FROM apikey WHERE name = $1 AND apikey = $2",
-                values: [name, key]
+                values: [name.toLowerCase(), key]
             }
 
             if (!name || !key) {

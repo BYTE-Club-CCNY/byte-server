@@ -25,7 +25,7 @@ function validating(
 
 const validate = (req: any, res: any, next: any) => {
     const requiredFields = {
-        uid: "string",
+        uid: "number",
         name: "string",
         "short-desc": "string",
         "long-desc": "string",
