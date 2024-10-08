@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_KEY }}
           script: |
-            cd byte-server
+            cd /home/ec2-user/byte-server
             pm2 stop server.ts
             git pull
             bun install
