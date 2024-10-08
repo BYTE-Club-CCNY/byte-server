@@ -17,7 +17,7 @@ const INTERVAL: number = secondsToMs(60 * 60);
 const PORT: number = 3000;
 const app = express();
 let dbAval: boolean = true;
-
+ 
 // initial check
 (async () => {
     try {
