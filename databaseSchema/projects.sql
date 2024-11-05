@@ -9,3 +9,4 @@ CREATE TABLE IF NOT EXISTS projects (
     "tech-stack" TEXT[],
     cohort VARCHAR,
     topic TEXT[]
+);
