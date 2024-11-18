@@ -9,9 +9,9 @@ import projectsDB from "./routes/projectsDB";
 import projectsLocal from "./routes/projectsLocal";
 import logger from "./utils/logger";
 
-const privateKey = fs.readFileSync("/etc/letsencrypt/live/test.byteccny.com/privkey.pem", "utf8");
-const certificate = fs.readFileSync("/etc/letsencrypt/live/test.byteccny.com/cert.pem", "utf8");
-const credentials = { key: privateKey, cert: certificate };
+// const privateKey = fs.readFileSync("/etc/letsencrypt/live/test.byteccny.com/privkey.pem", "utf8");
+// const certificate = fs.readFileSync("/etc/letsencrypt/live/test.byteccny.com/cert.pem", "utf8");
+// const credentials = { key: privateKey, cert: certificate };
 
 const INTERVAL: number = secondsToMs(60 * 60);
 const app = express();
@@ -66,8 +66,13 @@ app.get("*", (req: any, res: any) => {
     });
 });
 
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(80);
-httpsServer.listen(443);
+app.listen(3000, () => {
+    console.log("Server up and running on port 3000");
+});
+
+// const httpServer = http.createServer(app);
+// const httpsServer = https.createServer(credentials, app);
+
+// httpServer.listen(80);
+// httpsServer.listen(443);
