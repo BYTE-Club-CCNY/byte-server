@@ -1,13 +1,13 @@
-FROM node:18-alpine AS base
+FROM oven/bun:1 AS base
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 
-RUN npm ci
+RUN bun install
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "server.ts"]
+CMD [ "bun", "run", "server.ts" ]
