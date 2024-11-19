@@ -2,7 +2,8 @@ on:
   push: 
     branches:
       - main
-    paths: nginx.conf
+    paths: 
+        - nginx.conf
 
 name: update nginx
 jobs:
