@@ -19,5 +19,9 @@ jobs:
           key: ${{ secrets.AWS_KEY }}
           script: |
             cd /home/ec2-user/byte-server
+            git add .
+            git stash
+            git checkout main
+            git pull
             sudo cp nginx.conf /etc/nginx/nginx.conf
             sudo nginx -s reload
