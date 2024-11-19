@@ -1,5 +1,5 @@
 services:
-  server:
+  backend:
     build:
       dockerfile: Dockerfile
     container_name: server
@@ -12,7 +12,7 @@ services:
     image: nginx:latest
     container_name: nginx
     depends_on:
-      - server
+      - backend
     ports:
       - "80:80"
     networks:
