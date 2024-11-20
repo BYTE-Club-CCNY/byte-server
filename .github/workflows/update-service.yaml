@@ -2,8 +2,10 @@ on:
   push: 
     branches:
       - main
+    paths:
+        - deployment/**
 
-name: Update Application in Prod
+name: Update Byte Server Service
 jobs:
   build:
     name: Run Scripts on EC2
@@ -18,5 +20,4 @@ jobs:
           script: |
             cd /home/ec2-user/byte-server
             git pull
-            bun install
-            sudo systemctl restart byteserver
+            update-service
