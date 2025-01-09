@@ -20,4 +20,4 @@ jobs:
           script: |
             cd /home/ec2-user/byte-server
             git pull
-            update-service
+            deployment/update-service
