@@ -1,4 +1,0 @@
-# /usr/bin/bash
-
-sudo cp deployment/byteserver.service /etc/systemd/system/
-restart-service
