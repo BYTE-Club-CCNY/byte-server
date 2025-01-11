@@ -1,4 +1,4 @@
-module byteserver/webServer
+module byteserver
 
 go 1.23.3
 
