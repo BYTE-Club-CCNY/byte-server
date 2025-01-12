@@ -1,13 +1,16 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
+
+	"github.com/gofiber/fiber/v2"
 )
 
-func main() {
+func main() {	
 	port := ":3000"
 	app := fiber.New()
+	database.InitDB()
 	
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("BYTE Server is running!")
