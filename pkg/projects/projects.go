@@ -1,6 +1,11 @@
 package projects
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"byteserver/pkg/database"
+	schema "byteserver/pkg/schemas"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 type GetProjectsBody struct {
 	Team 	string 	`json:"team" validate:"required"`
@@ -21,22 +26,34 @@ func sayHi(c *fiber.Ctx) error {
 	return c.SendStatus(200);
 }
 
-
 func get(c *fiber.Ctx) error {
-	// extract params
-	params := new(GetProjectsBody);
+	params := GetProjectsBody{
+			Team:   c.Query("team"),
+			Cohort: c.Query("cohort"),
+			Name:   c.Query("name"),
+			}
 
-	if err := c.BodyParser(params); err != nil {
-		return err
+	var projects []schema.Project
+	query := database.DB.Limit(10)
+
+	if params.Team != "" {
+		query = query.Or("team = ?", params.Team)
+	}
+	if params.Cohort != "" {
+		query = query.Or("cohort = ?", params.Cohort)
+	}
+	if params.Name != "" {
+		query = query.Or("name = ?", params.Name)
 	}
 
-	// make request
+	result := query.Find(&projects)
 
-	// return data
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"team": params.Team,
-		"cohort": params.Cohort,
-		"name" : params.Name,
-	})
+	if result.Error != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Something went wrong internally",
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(projects);
 
 }
