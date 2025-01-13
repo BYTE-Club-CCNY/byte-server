@@ -1,23 +1,27 @@
 package mongodb
 
 import (
-	"github.com/joho/godotenv"
+	"byteserver/pkg/utils"
+	"context"
 	"log"
-	"os"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"context"
 )
 
 var client mongo.Client
 
 func ConnectDB() {
-	// Load environment variables so we can retrieve them
-	err := godotenv.Load()
+	err := utils.InitEnv()
+
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		panic(".env file missing!")
 	}
-	uri := os.Getenv("MONGO_URI") // retrieve mongodb URI
+	
+	uri, err := utils.GetEnv("MONGO_URI")
+	if err != nil {
+		panic("MONGO_URI value missing")
+	}
 
 	clientOptions := options.Client().ApplyURI(uri)
 
