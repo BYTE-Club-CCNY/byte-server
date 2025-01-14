@@ -2,15 +2,29 @@ package projects
 
 import (
 	"byteserver/pkg/database"
-	schema "byteserver/pkg/schemas"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type GetProjectsBody struct {
-	Cohort 	int
-	Name 	string
+	Cohort 		int
+	Name 		string
+	N_records 	int
+	Page 		int
+}
+
+type GetProjectsResult struct {
+	Cohort 			string
+	ProjectID		string
+	Members			[]string
+	ProjectName 	string
+	ShortDesc		string
+	LongDesc		string
+	Link			string
+	Image			string
+	TechStack		[]string
+	Topic			[]string
 }
 
 func Projects() *fiber.App {
@@ -48,23 +62,24 @@ func sayHi(c *fiber.Ctx) error {
 
 func get(c *fiber.Ctx) error {
 	printQueries(c)
-
 	params := GetProjectsBody{
-			Cohort: c.QueryInt("cohort"),
-			Name:   c.Query("name"),
+				Cohort: 	c.QueryInt("cohort", -1),
+				Name:	   	c.Query("name"),
+				N_records:	c.QueryInt("n_records", 10),
+				Page: 		c.QueryInt("page", 1),
 			}
 
-	var projects []schema.Project
-	var results []database.GetProjects
+	var projects []database.GetProjects
+	query := database.DB.Limit(params.N_records)
 
-	query := database.DB.Limit(10)
-
-	if params.Cohort != 0 { // horrible edge case!!!!
+	if params.Cohort != -1 {
 		query = query.Where("cohort_id = ?", params.Cohort)
 	}
 	if params.Name != "" {
 		query = query.Where("name = ?", params.Name)
 	}
+
+	query.Joins("INNER JOIN users.cohort c on c.cohort_id = projects.project.cohort_id")
 
 	err := query.Find(&projects)
 	if err.Error != nil {
@@ -73,50 +88,5 @@ func get(c *fiber.Ctx) error {
 		})
 	}
 
-	for i := range projects {
-		var cohort schema.Cohort
-		var team schema.Team
-		// get cohort name
-		var newProject database.GetProjects
-		cohortQuery := database.DB.Where("cohort_id = ?", projects[i].CohortID)
-		_ = cohortQuery.Find(&cohort)
-		newProject.Cohort = cohort.CohortName
-
-		teamQuery := database.DB.Where("id = ?", projects[i].ID)
-		_ = teamQuery.Find(&team)
-		
-		newProject.Names = getNames([]string{team.Member1.String(), 
-			team.Member2.String(), team.Member3.String(), team.Member4.String()})
-		newProject.ID = projects[i].ID.String()
-		newProject.Image = projects[i].Image
-		newProject.Link = projects[i].Link
-		newProject.LongDesc = projects[i].LongDesc
-		newProject.ShortDesc = projects[i].ShortDesc
-		newProject.ProjectName = projects[i].Name
-		newProject.TechStack = projects[i].TechStack
-		newProject.Topic = projects[i].Topic
-
-		// get team members names
-		results = append(results, newProject)
-	}
-
-	return c.Status(fiber.StatusOK).JSON(results);
-}
-
-func getNames(names []string) []string {
-	var res []string
-	for i := range names {
-		var people schema.User
-		query := database.DB.Where("uid = ?", names[i])
-		_ = query.Find(&people)
-
-		if people.MiddleName == "" {
-			res = append(res, fmt.Sprintf("%s %s",
-				people.FirstName, people.LastName))
-		} else {
-			res = append(res, fmt.Sprintf("%s %s %s",
-				people.FirstName, people.MiddleName, people.LastName))
-		}
-	}
-	return res
+	return c.Status(fiber.StatusOK).JSON(projects);
 }
