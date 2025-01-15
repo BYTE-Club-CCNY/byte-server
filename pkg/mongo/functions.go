@@ -3,6 +3,7 @@ package mongodb
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
+	"log"
 )
 
 func CreateNewCollection(season *string) error {
@@ -13,16 +14,21 @@ func CreateNewCollection(season *string) error {
 	return nil
 }
 
-func GetAllApps(season string) []bson.D {
+func GetAllApps(season string) []bson.M {
 	collection := db.Collection(season)
-	var result []bson.D
+	var result []bson.M
 	cursor, err := collection.Find(context.TODO(), bson.D{})
 	if err != nil {
-		panic(err)
-	}
-	if err = cursor.Decode(&result); err != nil {
+		log.Println("Failed to retrieve applications from collection")
 		panic(err)
 	}
 	defer cursor.Close(context.TODO())
+
+	if err = cursor.All(context.TODO(), &result); err != nil {
+		log.Println("Failed to decode all documents")
+		panic(err)
+	}
+
+
 	return result
 }

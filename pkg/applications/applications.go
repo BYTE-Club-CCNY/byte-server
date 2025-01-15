@@ -30,7 +30,7 @@ func GetSeasonApplications(c *fiber.Ctx) error {
 	}
 	*/
 	data := mongodb.GetAllApps(season)
-	fmt.Println(data)
+	c.Status(fiber.StatusOK).JSON(data)
 	return nil
 }
 
