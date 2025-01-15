@@ -14,18 +14,6 @@ type GetProjectsBody struct {
 	Page 		int
 }
 
-type GetProjectsResult struct {
-	Cohort 			string
-	ProjectID		string
-	Members			[]string
-	ProjectName 	string
-	ShortDesc		string
-	LongDesc		string
-	Link			string
-	Image			string
-	TechStack		[]string
-	Topic			[]string
-}
 
 func Projects() *fiber.App {
 	app := fiber.New()
@@ -72,19 +60,19 @@ func get(c *fiber.Ctx) error {
 	var projects []database.GetProjects
 	query := database.DB.Limit(params.N_records)
 
-	if params.Cohort != -1 {
-		query = query.Where("cohort_id = ?", params.Cohort)
-	}
-	if params.Name != "" {
-		query = query.Where("name = ?", params.Name)
-	}
+	err := query.Raw(database.GetProjectsQuery).Scan(&projects).Error
+	// if params.Cohort != -1 {
+	// 	query = query.Where("cohort_id = ?", params.Cohort)
+	// }
+	// if params.Name != "" {
+	// 	query = query.Where("name = ?", params.Name)
+	// }
 
-	query.Joins("INNER JOIN users.cohort c on c.cohort_id = projects.project.cohort_id")
+	// err := query.Find(&projects)
 
-	err := query.Find(&projects)
-	if err.Error != nil {
+	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"message": "Something went wrong internally",
+			"message": err.Error(),
 		})
 	}
 
