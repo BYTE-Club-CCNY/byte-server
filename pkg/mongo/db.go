@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var client mongo.Client
+var db *mongo.Database
 
 func Connect() error {
 	err := utils.InitEnv()
@@ -31,16 +31,9 @@ func Connect() error {
 	}
 	fmt.Println("MongoDB successfully connected...")
 
-	// Stops connection to MongoDB once script finishes
-	defer func() {
-		if err := client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
-
 	// Initializes the database if it does not exist
-	database := client.Database("byte-apps")
-	fmt.Printf("%s initialized", database.Name())
+	db = client.Database("byte-apps")
+	fmt.Printf("%s initialized", db.Name())
 
 	return nil
 }

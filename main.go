@@ -5,6 +5,7 @@ import (
 	"byteserver/pkg/projects"
 	"byteserver/pkg/mongo"
 	"github.com/gofiber/fiber/v2"
+	"byteserver/pkg/applications"
 )
 
 func main() {	
@@ -17,6 +18,7 @@ func main() {
 		return c.SendString("BYTE Server is running!")
 	})
 	app.Mount("/projects", projects.Projects())
+	app.Mount("/applications", applications.ApplicationRouting())
 
 	app.Listen(port)
 }
