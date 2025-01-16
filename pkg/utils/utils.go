@@ -6,15 +6,10 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"github.com/joho/godotenv"
+	"github.com/gofiber/fiber/v2"
 )
 
 func InitEnv() error {
-	err := godotenv.Load()
-	if err != nil {
-	  panic("Error loading .env file")
-	}
-
     file, err := os.Open(".env")
     if err != nil {
         return errors.New(".env file not found in root of application directory")
@@ -44,4 +39,18 @@ func GetEnv(key string) (string, error) {
 	}
 
 	return value, nil;
+}
+
+func PrintParams(c *fiber.Ctx) {
+	for key, value := range c.AllParams() {
+		fmt.Printf("%s: %s\t", key, value)
+	}
+	fmt.Print("\n")
+}
+
+func PrintQueries(c *fiber.Ctx) {
+	for key, value := range c.Queries() {
+		fmt.Printf("%s: %s\t", key, value)
+	}
+	fmt.Print("\n")
 }

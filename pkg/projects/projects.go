@@ -3,7 +3,7 @@ package projects
 import (
 	"byteserver/pkg/database"
 	schema "byteserver/pkg/schemas"
-	"fmt"
+	"byteserver/pkg/utils"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
@@ -16,11 +16,6 @@ var validate = validator.New()
 
 func Projects() *fiber.App {
 	app := fiber.New()
-
-	app.Use(func(c *fiber.Ctx) error {
-    	fmt.Printf("%s request for %s\n", c.Method(), c.Path())
-		return c.Next()
-	})
 
 	app.Get("/", sayHi)
 	app.Get("/get", get)
@@ -44,26 +39,12 @@ func parseArrays(array string) pq.StringArray {
 	return pq.StringArray(res)
 }
 
-func printQueries(c *fiber.Ctx) {
-	for key, value := range c.Queries() {
-		fmt.Printf("%s: %s\t", key, value)
-	}
-	fmt.Print("\n")
-}
-
-func printParams(c *fiber.Ctx) {
-	for key, value := range c.AllParams() {
-		fmt.Printf("%s: %s\t", key, value)
-	}
-	fmt.Print("\n")
-}
-
 func sayHi(c *fiber.Ctx) error {
 	return c.SendStatus(200);
 }
 
 func get(c *fiber.Ctx) error {
-	printQueries(c)
+	utils.PrintQueries(c)
 	params := GetProjectsBody{
 				Cohort: 	c.QueryInt("cohort", -1),
 				Name:	   	c.Query("name"),
@@ -108,7 +89,7 @@ func get(c *fiber.Ctx) error {
 }
 
 func add(c *fiber.Ctx) error {
-	printParams(c)
+	utils.PrintParams(c)
 	var params AddProjectsBody
 
 	if err := c.BodyParser(&params); err != nil {
@@ -141,8 +122,7 @@ func add(c *fiber.Ctx) error {
 	}
 
 	if len(peopleIDs) != len(peopleNames) {
-		return c.Status(fiber.ErrBadRequest.Code).SendString(`Some or all of 
-															these people do not exist`)
+		return c.Status(fiber.ErrBadRequest.Code).SendString(`Some or all of these people do not exist`)
 	}
 
 	// create team & return team ID
