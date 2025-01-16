@@ -1,4 +1,4 @@
-package applications
+package apps
 
 import (
 	"github.com/gofiber/fiber/v2"
