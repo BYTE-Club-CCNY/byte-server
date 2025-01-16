@@ -53,12 +53,11 @@ func get(c *fiber.Ctx) error {
 	params := GetProjectsBody{
 				Cohort: 	c.QueryInt("cohort", -1),
 				Name:	   	c.Query("name"),
-				N_records:	c.QueryInt("n_records", 10),
 				Page: 		c.QueryInt("page", 1),
 			}
 
 	var projects []database.GetProjects
-	query := database.DB.Limit(params.N_records)
+	query := database.DB.Scopes(database.Paginate(params.Page))
 
 
 	query.Table("projects.project AS p").
@@ -87,7 +86,7 @@ func get(c *fiber.Ctx) error {
 
 	if query.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"message": query.Error.Error(),
+			"error": query.Error.Error(),
 		})
 	}
 
