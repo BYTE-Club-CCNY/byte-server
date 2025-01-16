@@ -80,7 +80,7 @@ func get(c *fiber.Ctx) error {
 		query = query.Where("p.cohort_id = ?", params.Cohort)
 	}
 	if params.Name != "" {
-		query = query.Where("p.name = ?", params.Name)
+		query = query.Where("LOWER(p.name) = LOWER(?)", params.Name)
 	}
 
 	query.Scan(&projects)
