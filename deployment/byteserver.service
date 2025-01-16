@@ -1,0 +1,15 @@
+[Unit]
+Description=Express BYTE application
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=ec2-user
+ExecStart=/home/ec2-user/byte-server/app
+WorkingDirectory=/home/ec2-user/byte-server
+
+[Install]
+WantedBy=multi-user.target
