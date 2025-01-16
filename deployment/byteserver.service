@@ -1,5 +1,5 @@
 [Unit]
-Description=Express BYTE application
+Description=GO BYTE application
 After=network.target
 StartLimitIntervalSec=0
 
