@@ -3,6 +3,7 @@ package projects
 import (
 	"byteserver/pkg/database"
 	schema "byteserver/pkg/schemas"
+	"byteserver/pkg/utils"
 	"fmt"
 	"strings"
 
@@ -17,11 +18,6 @@ var validate = validator.New()
 func Projects() *fiber.App {
 	app := fiber.New()
 
-	app.Use(func(c *fiber.Ctx) error {
-    	fmt.Printf("%s request for %s\n", c.Method(), c.Path())
-		return c.Next()
-	})
-
 	app.Get("/", sayHi)
 	app.Get("/get", get)
 	app.Post("/add", add)
@@ -31,7 +27,7 @@ func Projects() *fiber.App {
 
 func parseArrays(array string) pq.StringArray {
 	if array[0] != '[' || array[len(array) - 1] != ']' {
-		panic("Malformed array")
+		panic(fmt.Sprintf("Malformed array\t%s", array))
 	}
 
 	// remove [] and "" 
@@ -44,26 +40,12 @@ func parseArrays(array string) pq.StringArray {
 	return pq.StringArray(res)
 }
 
-func printQueries(c *fiber.Ctx) {
-	for key, value := range c.Queries() {
-		fmt.Printf("%s: %s\t", key, value)
-	}
-	fmt.Print("\n")
-}
-
-func printParams(c *fiber.Ctx) {
-	for key, value := range c.AllParams() {
-		fmt.Printf("%s: %s\t", key, value)
-	}
-	fmt.Print("\n")
-}
-
 func sayHi(c *fiber.Ctx) error {
 	return c.SendStatus(200);
 }
 
 func get(c *fiber.Ctx) error {
-	printQueries(c)
+	utils.PrintQueries(c)
 	params := GetProjectsBody{
 				Cohort: 	c.QueryInt("cohort", -1),
 				Name:	   	c.Query("name"),
@@ -108,7 +90,7 @@ func get(c *fiber.Ctx) error {
 }
 
 func add(c *fiber.Ctx) error {
-	printParams(c)
+	utils.PrintParams(c)
 	var params AddProjectsBody
 
 	if err := c.BodyParser(&params); err != nil {
@@ -123,41 +105,19 @@ func add(c *fiber.Ctx) error {
 		})
 	}
 
-	// get each person's UID
-	var peopleNames []string
-	members := []string{params.Member1, params.Member2, params.Member3, params.Member4}
-	for i := range members {
-		if members[i] != "" {
-			peopleNames = append(peopleNames, strings.TrimSpace(members[i]))
-		}
-	}
-
-	var peopleIDs []uuid.UUID;
-	query := database.DB.Select("uid").Model(&schema.User{})
-	err := query.Where("first_name IN (?)", peopleNames).Scan(&peopleIDs)
-	
-	if err.Error != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(err.Error.Error())
-	}
-
-	if len(peopleIDs) != len(peopleNames) {
-		return c.Status(fiber.ErrBadRequest.Code).SendString(`Some or all of 
-															these people do not exist`)
-	}
-
 	// create team & return team ID
 	team := new(schema.Team)
-	if len(peopleIDs) > 0 {
-		team.Member1 = peopleIDs[0]
+	if params.Member1 != uuid.Nil {
+		team.Member1 = params.Member1
 	}
-	if len(peopleIDs) > 1 {
-		team.Member2 = peopleIDs[1]
+	if params.Member2 != uuid.Nil {
+		team.Member2 = params.Member2
 	}
-	if len(peopleIDs) > 2 {
-		team.Member3 = peopleIDs[2]
+	if params.Member3 != uuid.Nil {
+		team.Member3 = params.Member3
 	} 
-	if len(peopleIDs) > 3 {
-		team.Member3 = peopleIDs[3]
+	if params.Member4 != uuid.Nil {
+		team.Member3 = params.Member4
 	}
 
 	res := database.DB.Create(&team)

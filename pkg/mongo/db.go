@@ -3,15 +3,14 @@ package mongodb
 import (
 	"byteserver/pkg/utils"
 	"context"
-	"log"
-
+	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var client mongo.Client
+var db *mongo.Database
 
-func ConnectDB() {
+func Connect() error {
 	err := utils.InitEnv()
 
 	if err != nil {
@@ -28,17 +27,13 @@ func ConnectDB() {
 	// Connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
-		log.Fatal("Error connecting to MongoDB")
-		panic(err)
+		return err
 	}
+	fmt.Println("MongoDB successfully connected...")
 
-	// Stops connection to MongoDB once script finishes
-	defer func() {
-		if err := client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
+	// Initializes the database if it does not exist
+	db = client.Database("byte-apps")
+	fmt.Printf("%s initialized", db.Name())
 
-	database := client.Database("byte")
-	database.CreateCollection(context.Background(), "spring-2025")
+	return nil
 }
