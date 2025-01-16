@@ -1,4 +1,11 @@
-[] Go mongodb initialize and setup
-[] create users table in pgadmin
-[] create voting table in pgadmin
-[] create , initialized collection in no sql db
+- [x] Go mongodb initialize and setup
+- [ ] Create tables in Postgres
+  - [ ] Create voting table
+  - [ ] Create auth table
+- [x] Add collections to MongoDB
+  - [x] Endpoint to create collection
+  - [x] Endpoint to see data within a collection
+- [ ] Look into GORM
+  - [ ] What is GORM good for?
+  - [ ] Alternatives? 
+  - [ ] Is it possible to do join across tables? 
