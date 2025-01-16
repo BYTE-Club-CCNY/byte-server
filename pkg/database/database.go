@@ -9,12 +9,12 @@ import (
 )
 
 var DB *gorm.DB
+var PageSize int = 10;
 
 func InitDB() error {
 	var err error
 	utils.InitEnv()
 
-	// errors ignored cause tests already covered it
 	host, _ := utils.GetEnv("POSTGRESQL_DB_HOST")
 	user, _ := utils.GetEnv("POSTGRESQL_DB_USER")
 	password, _ := utils.GetEnv("POSTGRESQL_DB_PASSWORD")
@@ -32,4 +32,11 @@ func InitDB() error {
 
 	fmt.Println("Database connected...")
 	return nil
+}
+
+func Paginate(page int) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		offset := (page - 1) * PageSize
+		return db.Offset(offset).Limit(PageSize)
+	}
 }
