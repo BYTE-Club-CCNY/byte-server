@@ -4,10 +4,13 @@ import (
 	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
 	"byteserver/pkg/users"
+
 	// "byteserver/pkg/mongo"
-	"github.com/gofiber/fiber/v2"
 	"byteserver/pkg/applications"
 	"fmt"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {	
@@ -15,6 +18,8 @@ func main() {
 	app := fiber.New()
 	database.InitDB()
 	// mongodb.Connect()
+	
+	app.Use(cors.New())
 	
 	app.Use(func(c *fiber.Ctx) error {
     	fmt.Printf("%s request for %s\n", c.Method(), c.Path())
