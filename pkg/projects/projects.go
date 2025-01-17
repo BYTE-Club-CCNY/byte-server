@@ -69,7 +69,8 @@ func get(c *fiber.Ctx) error {
 		Joins("LEFT JOIN users.people u2 ON t.member2 = u2.uid").
 		Joins("LEFT JOIN users.people u3 ON t.member3 = u3.uid").
 		Joins("LEFT JOIN users.people u4 ON t.member4 = u4.uid").
-		Joins("INNER JOIN users.cohort c ON p.cohort_id = c.cohort_id")
+		Joins("INNER JOIN users.cohort c ON p.cohort_id = c.cohort_id").
+		Order("p.cohort_id DESC")
 
 	if params.Cohort != -1 {
 		query = query.Where("p.cohort_id = ?", params.Cohort)

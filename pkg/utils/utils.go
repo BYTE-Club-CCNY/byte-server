@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
@@ -63,4 +65,20 @@ func PrintQueries(c *fiber.Ctx) {
 		fmt.Printf("%s: %s\t", key, value)
 	}
 	fmt.Print("\n")
+}
+
+func Validate(c *fiber.Ctx, dest interface{}) error {
+	var validate = validator.New()
+
+	fmt.Println(dest)
+
+	if err := c.BodyParser(dest); err != nil {
+		return err
+	}
+
+	if err := validate.Struct(dest); err != nil {
+		return err
+	}
+
+	return nil
 }

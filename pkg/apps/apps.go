@@ -1,9 +1,10 @@
 package apps
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"byteserver/pkg/mongo"
+	mongodb "byteserver/pkg/mongo"
 	"fmt"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func ApplicationRouting() *fiber.App {
@@ -11,6 +12,7 @@ func ApplicationRouting() *fiber.App {
 
 	app.Get("/season-apps", GetSeasonApplications)
 	app.Get("/new-season", CreateNewSeason)
+	app.Post("/edit-cohort", EditCohortDraft)
 	
 	return app
 }
