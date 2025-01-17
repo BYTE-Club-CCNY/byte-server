@@ -94,14 +94,9 @@ func add(c *fiber.Ctx) error {
 	utils.PrintParams(c)
 	var params AddProjectsBody
 
-	if err := c.BodyParser(&params); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid request body",
-		})
-	}
-
-	if err := validate.Struct(params); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+	err := utils.Validate(c, &params)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
