@@ -7,9 +7,10 @@ import (
 	"io/ioutil"
 	schema "byteserver/pkg/schemas"
 	"github.com/lib/pq"
-	"strings"
 	"byteserver/pkg/database"
 	"github.com/google/uuid"
+	"byteserver/pkg/utils"
+	"log"
 )
 
 type JsonStruc struct {
@@ -29,7 +30,9 @@ type JsonData struct {
 }
 
 func main () {
-	jsonFile, err := os.Open("./scripts/migrate-data/data.json")
+	utils.IshmamLoadEnv()
+	database.InitDB()
+	jsonFile, err := os.Open("./scripts/migrate-projects/data.json")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -51,47 +54,36 @@ func main () {
 		project.Topic = pq.StringArray(jsondata.JsonData[i].Topic)
 		project.TechStack = pq.StringArray(jsondata.JsonData[i].TechStack)
 
-		var peopleNames []string
-		members := jsondata.JsonData[i].Team
-		for i := range members {
-			if members[i] != "" {
-				peopleNames = append(peopleNames, strings.TrimSpace(members[i]))
+		
+		members := jsondata.JsonData[i].Team	
+		team := new(schema.Team)
+		for i, uuid_string := range members {
+			member_uuid := uuid.MustParse(uuid_string)
+			if i == 0 && member_uuid != uuid.Nil {
+				team.Member1 = member_uuid
+			} else if i == 1  && member_uuid != uuid.Nil{
+				team.Member2 = member_uuid
+			} else if i == 2 && member_uuid != uuid.Nil {
+				team.Member3 = member_uuid
+			} else if i == 3 && member_uuid != uuid.Nil {
+				team.Member4 = member_uuid
 			}
 		}
-
-		var peopleIDs []uuid.UUID;
-		query := database.DB.Select("uid").Model(&schema.User{})
-		err := query.Where("first_name IN (?)", peopleNames).Scan(&peopleIDs)
-		
-		if err.Error != nil {
-			panic(err)
-		}
-	
-		if len(peopleIDs) != len(peopleNames) {
-			panic("Some or all of these people do not exist")
-		}
-	
-		// create team & return team ID
-		team := new(schema.Team)
-		if len(peopleIDs) > 0 {
-			team.Member1 = peopleIDs[0]
-		}
-		if len(peopleIDs) > 1 {
-			team.Member2 = peopleIDs[1]
-		}
-		if len(peopleIDs) > 2 {
-			team.Member3 = peopleIDs[2]
-		} 
-		if len(peopleIDs) > 3 {
-			team.Member3 = peopleIDs[3]
-		}
-	
+		fmt.Println("In process of migrating: ", project)
 		res := database.DB.Create(&team)
 		if res.Error != nil {
+			log.Println("error creating team")
+			log.Println("error on project: ", project)
 			panic(res.Error)
 		}
 		project.ID = team.ID
-		database.DB.Create(project)
+		res = database.DB.Create(&project)
+		if res.Error != nil {
+			log.Println("error creating project")
+			log.Println("error on project: ", project)
+			panic(res.Error)
+		}
+		fmt.Println("Successfully Migrated: ", project.Name)
 	}
 	
 }
