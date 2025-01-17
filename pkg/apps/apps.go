@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func ApplicationRouting() *fiber.App {
+func App() *fiber.App {
 	app := fiber.New()
 
 	app.Get("/collection-data", GetCollectionData) // returns all documents from a collection

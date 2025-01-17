@@ -29,7 +29,7 @@ func main() {
 		return c.SendString("BYTE Server is running!")
 	})
 	app.Mount("/projects", projects.Projects())
-	app.Mount("/apps", apps.ApplicationRouting())
+	app.Mount("/apps", apps.App())
 
 	app.Listen(port)
 }
