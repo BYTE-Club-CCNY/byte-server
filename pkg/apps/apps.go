@@ -1,64 +1,34 @@
 package apps
 
 import (
-	mongodb "byteserver/pkg/mongo"
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 )
 
 func ApplicationRouting() *fiber.App {
 	app := fiber.New()
 
-	app.Get("/season-apps", GetSeasonApplications)
-	app.Get("/new-season", CreateNewSeason)
-	app.Post("/edit-cohort", EditCohortDraft)
-	
+	app.Get("/collection-data", GetCollectionData)
+	app.Post("/new-collection", NewCollection)
+	app.Post("/edit-cohort", EditCohortDraft) // edit a cohort draft
+
+	app.Get("/apps/view-draft") // view draft
+	app.Post("/apps/create-draft") // create a new draft
+	/*
+	create cohort, cohort id, name, application layout, set deadline
+	app layout will be stored as a template in mongo
+	deadline, cohort_id stored in postgres
+	*/
+	app.Post("publish-draft")
+
+	app.Get("/apps/get-template") // question layout per cohort (mongo)
+
+	/* saves application w/ userid (uuid same as the one in postgres) 
+	to mongo application collection */
+	app.Post("/apps/submit-app") 
+
+	app.Post("/apps/save-app-draft") // save draft only if app is not submitted
+
+	app.Get("/apps/view") // get existing application(s) query by id and page
+
 	return app
 }
-
-// Retrieves all applications for a given season
-func GetSeasonApplications(c *fiber.Ctx) error {
-	season := c.Query("season")
-	fmt.Println(season)
-
-	/*
-	We should verify the token
-	token := c.GetRespHeader("token", "invalid")
-	if !verify(token) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Invalid Token, You are not authorized.",
-		})
-	}
-	*/
-	data := mongodb.GetAllApps(season)
-	c.Status(fiber.StatusOK).JSON(data)
-	return nil
-}
-
-// Creates a new collection for a new season if it doesn't exist
-// Example Input: /new-season?season=spring-2025
-func CreateNewSeason(c *fiber.Ctx) error {
-	season := c.Query("season")
-
-	/*
-	We should verify the token
-	token := c.GetRespHeader("token", "invalid")
-	if !verify(token) {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Invalid Token, You are not authorized.",
-		})
-	}
-	*/
-
-	if err := mongodb.CreateNewCollection(&season); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Error creating collection",
-			"error": err.Error(),
-		});
-	}
-	
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Successfully created collection",
-	});
-}	
