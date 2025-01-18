@@ -5,6 +5,6 @@ type EditCohortDraftBody struct {
 	ProjectSchema 	string		`json:"project_schema" form:"project_schema" validate:"required"`
 }
 
-type Collection struct {
-	Name string `json:"collection" form:"collection" validate:"required"`
+type Cohort struct {
+	Cohort_id string `json:"cohort_id" form:"cohort_id" validate:"required"`
 }

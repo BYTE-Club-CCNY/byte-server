@@ -3,6 +3,8 @@ package apps
 import (
 	mongodb "byteserver/pkg/mongo"
 	"byteserver/pkg/utils"
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -42,10 +44,10 @@ func GetCollectionData(c *fiber.Ctx) error {
 /* Creates a new collection if it doesn't exist
  Example: /new-collection
  Body: {
-	collection: "fall-2024"
+	cohort_id: "1"
 } */
-func NewCollection(c *fiber.Ctx) error {
-	collectionName := new(Collection)
+func NewCohort(c *fiber.Ctx) error {
+	cohort := &Cohort{} 
 
 	/*
 	We should verify the token
@@ -57,14 +59,14 @@ func NewCollection(c *fiber.Ctx) error {
 	}
 	*/
 
-	err := utils.Validate(c, &collectionName)
+	err := utils.Validate(c, cohort)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	if err := mongodb.CreateNewCollection(c.Context(), collectionName.Name); err != nil {
+	if err := mongodb.CreateNewCohort(c.Context(), "cohort-" + cohort.Cohort_id); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Error creating collection",
 			"error":   err.Error(),
@@ -72,6 +74,6 @@ func NewCollection(c *fiber.Ctx) error {
 	}
 	
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Successfully created collection",
+		"message": fmt.Sprintf("Successfully created %s collection", "cohort-" + cohort.Cohort_id),
 	});
 }	

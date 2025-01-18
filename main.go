@@ -3,18 +3,22 @@ package main
 import (
 	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
+	"byteserver/pkg/utils"
+
 	//"byteserver/pkg/users"
-	// "byteserver/pkg/mongo"
-	"fmt"
-	"github.com/gofiber/fiber/v2"
+	 "byteserver/pkg/mongo"
 	"byteserver/pkg/apps"
+	"fmt"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {	
 	port := ":3000"
 	app := fiber.New()
+	utils.IshmamLoadEnv()
 	database.InitDB()
-	// mongodb.Connect()
+	mongodb.Connect()
 	
 	app.Use(func(c *fiber.Ctx) error {
     	fmt.Printf("%s request for %s\n", c.Method(), c.Path())
