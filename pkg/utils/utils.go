@@ -73,11 +73,11 @@ func Validate(c *fiber.Ctx, dest interface{}) error {
 	fmt.Println(dest)
 
 	if err := c.BodyParser(dest); err != nil {
-		return err
+        return fmt.Errorf("body parsing failed: %w", err)
 	}
 
 	if err := validate.Struct(dest); err != nil {
-		return err
+        return fmt.Errorf("validation failed: %w", err)
 	}
 
 	return nil
