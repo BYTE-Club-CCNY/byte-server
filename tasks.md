@@ -1,11 +1,16 @@
 - [x] Go mongodb initialize and setup
-- [ ] Create tables in Postgres
-  - [ ] Create voting table
-  - [ ] Create auth table
 - [x] Add collections to MongoDB
   - [x] Endpoint to create collection
   - [x] Endpoint to see data within a collection
-- [ ] Look into GORM
-  - [ ] What is GORM good for?
-  - [ ] Alternatives? 
-  - [ ] Is it possible to do join across tables? 
+- [ ] Draft Endpoints
+  - [ ] Create draft endpoint
+  - [ ] Edit draft endpoint
+  - [ ] View draft endpoint
+  - [ ] Publish draft endpoint
+
+## Brainstorm
+> I think we should just have one collection for every semester, and then every document would have a "documentType" which would let us separate applications, draft, and voting.
+- What does a draft need?
+  - you can have arbritrary amount of questions
+  - documentType 
+  - deadline
