@@ -2,6 +2,7 @@ package users
 
 import (
 	"byteserver/pkg/database"
+	"byteserver/pkg/redis"
 	schema "byteserver/pkg/schemas"
 	"byteserver/pkg/utils"
 	"strings"
@@ -56,6 +57,7 @@ func add(c *fiber.Ctx) error {
 			"error": res.Error.Error(),
 		})
 	}
-
+	
+	redis.ClearCache()
 	return c.Status(fiber.StatusOK).JSON(user)
 }

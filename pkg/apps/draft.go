@@ -2,6 +2,7 @@ package apps
 
 import (
 	"byteserver/pkg/utils"
+	"byteserver/pkg/redis"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -17,7 +18,7 @@ func EditCohortDraft(c *fiber.Ctx) error {
 		})
 	}
 
-
+	redis.ClearCache()
 	return c.SendStatus(fiber.StatusOK)
 }
 
