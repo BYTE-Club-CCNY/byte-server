@@ -4,7 +4,7 @@ import (
 	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
 	"byteserver/pkg/redis"
-	"encoding/json"
+	_"encoding/json"
 
 	"byteserver/pkg/utils"
 	//"byteserver/pkg/users"
@@ -28,6 +28,7 @@ func main() {
 		return c.Next()
 	})
 
+	/*
 	app.Use(func(c *fiber.Ctx) error {
 		if c.Method() != "GET" {
 			return c.Next()
@@ -39,7 +40,7 @@ func main() {
 			return c.Status(fiber.StatusOK).SendString(value)
 		}
 		return c.Next()
-	})
+	})*/
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("BYTE Server is running!")
