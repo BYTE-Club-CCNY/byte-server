@@ -9,7 +9,7 @@ import (
 )
 
 // Retrieves all applications for a given collection
-// Example Usage: /collection-data?collection=spring-2025
+// Example Usage: /collection-data?collection=cohort-1
 func GetCollectionData(c *fiber.Ctx) error {
 	collectionName := c.Query("collection")
 	

@@ -13,7 +13,7 @@ func CreateNewCohort(ctx context.Context, cohort string) error {
 		return errors.New("collection name cannot be empty")
 	}
 
-	if err := db.CreateCollection(ctx, cohort); err != nil {
+	if err := DB.CreateCollection(ctx, cohort); err != nil {
 		log.Printf("failed to create collection '%s': %w", cohort, err)
 		return fmt.Errorf("failed to create collection '%s': %w", cohort, err)
 	}
@@ -22,7 +22,7 @@ func CreateNewCohort(ctx context.Context, cohort string) error {
 }
 
 func GetAllData(ctx context.Context, collectionName string) ([]bson.M, error) {
-	collection := db.Collection(collectionName)
+	collection := DB.Collection(collectionName)
 	var result []bson.M
 	cursor, err := collection.Find(ctx, bson.D{})
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-var db *mongo.Database
+var DB *mongo.Database
 
 func Connect() error {
 	err := utils.InitEnv()
@@ -33,19 +33,19 @@ func Connect() error {
 	fmt.Println("MongoDB successfully connected...")
 
 	// Initializes the database if it does not exist
-	db = client.Database("byte-apps")
+	DB = client.Database("byte-apps")
 
 	// Need to create a collection with at least one document, so that the 
 	// database persists. Once deployed, we can remove this part of the code
 	// to save storage space. 
-	collection := db.Collection("sample")
+	collection := DB.Collection("sample")
 	validationDoc := bson.D{{Key: "validation", Value: "test"}}
 	_, err = collection.InsertOne(context.Background(), validationDoc)
 	if err != nil {
 		fmt.Printf("Failed to validate collection 'sample': %v", err)
 	}
 
-	fmt.Printf("%s initialized", db.Name())
+	fmt.Printf("%s initialized", DB.Name())
 
 	return nil
 }
