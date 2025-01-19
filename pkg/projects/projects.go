@@ -2,6 +2,7 @@ package projects
 
 import (
 	"byteserver/pkg/database"
+	"byteserver/pkg/redis"
 	schema "byteserver/pkg/schemas"
 	"byteserver/pkg/utils"
 	"fmt"
@@ -135,7 +136,7 @@ func add(c *fiber.Ctx) error {
 	project.Image = params.Image
 
 	database.DB.Create(project)
-	
+	redis.ClearCache()
 
 	return c.SendStatus(fiber.StatusOK)
 }
