@@ -8,3 +8,8 @@ type EditCohortDraftBody struct {
 type Cohort struct {
 	Cohort_id string `json:"cohort_id" form:"cohort_id" validate:"required"`
 }
+
+type InitDraft struct {
+	DocType string `json:"docType" form:"docType" validate:"required"`
+	Cohort_id string `json:"cohort_id" form:"cohort_id" validate:"required"`
+}
