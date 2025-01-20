@@ -9,7 +9,14 @@ type Cohort struct {
 	Cohort_id string `json:"cohort_id" form:"cohort_id" validate:"required"`
 }
 
-type InitDraft struct {
-	DocType string `json:"docType" form:"docType" validate:"required"`
+type EditDraft struct {
 	Cohort_id string `json:"cohort_id" form:"cohort_id" validate:"required"`
+	Deadline string `json:"deadline" form:"deadline" validate:"required"`
+	Questions []Question `json:"questions" form:"questions" validate:"required"` 
+}
+
+type Question struct {
+	question string
+	answerType string 
+	options []string
 }
