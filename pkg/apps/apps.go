@@ -15,17 +15,15 @@ func App() *fiber.App {
 	
 	app.Post("/create-draft", CreateDraft) // create a new draft
 
-	
 	/*
 	create cohort, cohort id, application layout, set deadline
 	app layout will be stored as a template in mongo
 	deadline, cohort_id stored in postgres
 	*/
 
-	/*
-	app.Post("publish-draft")
+	app.Post("publish-draft",PublishDraft)
 
-	app.Get("/get-template") // question layout per cohort (mongo)*/
+	app.Get("/get-template", ViewTemplate) // question layout per cohort (mongo)
 
 	/* saves application w/ userid (uuid same as the one in postgres) 
 	to mongo application collection */
