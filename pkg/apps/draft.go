@@ -2,7 +2,7 @@ package apps
 
 import (
 	mongodb "byteserver/pkg/mongo"
-	"byteserver/pkg/redis"
+	_"byteserver/pkg/redis"
 	"byteserver/pkg/utils"
 	"log"
 	"github.com/gofiber/fiber/v2"
@@ -12,7 +12,7 @@ import (
  Body: {
 	cohort_id: "1",
 	deadline: "YYYY-MM-DD HH:mm:ss",
-	<optional> questions: [
+	questions: [
 		{
 			question: "string",
 			type: "multiple-choice",
@@ -31,16 +31,29 @@ import (
 	]
 } */
 func EditCohortDraft(c *fiber.Ctx) error {
-	var params EditCohortDraftBody
+	var params utils.EditDraft
 
 	err := utils.Validate(c, &params)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
+			"message": "Error with validating inputs",
 			"error": err.Error(),
 		})
 	}
 
-	redis.ClearCache()
+	if err = mongodb.EditDraft(params); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error Editing Draft",
+			"error":   err.Error(),
+		})
+	}
+	/*
+	if err = redis.ClearCache(); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error with Redis",
+			"error":   err.Error(),
+		})
+	}*/
 	return c.SendStatus(fiber.StatusOK)
 }
 
