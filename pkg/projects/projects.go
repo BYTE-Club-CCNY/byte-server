@@ -56,7 +56,6 @@ func get(c *fiber.Ctx) error {
 	var projects []database.GetProjects
 	query := database.DB.Scopes(database.Paginate(params.Page))
 
-
 	query.Table("projects.project AS p").
 		Select(`p.id, p.name, p.topic, p.short_desc, p.long_desc, 
 				p.link, p.image, p.tech_stack,
@@ -71,7 +70,9 @@ func get(c *fiber.Ctx) error {
 		Joins("LEFT JOIN users.people u3 ON t.member3 = u3.uid").
 		Joins("LEFT JOIN users.people u4 ON t.member4 = u4.uid").
 		Joins("INNER JOIN users.cohort c ON p.cohort_id = c.cohort_id").
+		Order("p.cohort_id DESC").
 		Order("p.cohort_id DESC")
+
 
 	if params.Cohort != -1 {
 		query = query.Where("p.cohort_id = ?", params.Cohort)

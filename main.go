@@ -3,16 +3,14 @@ package main
 import (
 	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
-	"byteserver/pkg/redis"
-	_"encoding/json"
+	"byteserver/pkg/users"
 
-	"byteserver/pkg/utils"
-	//"byteserver/pkg/users"
-	 "byteserver/pkg/mongo"
-	"byteserver/pkg/apps"
+	// "byteserver/pkg/mongo"
+	"byteserver/pkg/applications"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {	
@@ -22,6 +20,8 @@ func main() {
 	database.InitDB()
 	redis.InitRedis()
 	mongodb.Connect()
+	
+	app.Use(cors.New())
 	
 	app.Use(func(c *fiber.Ctx) error {
     	fmt.Printf("%s request for %s\n", c.Method(), c.Path())
