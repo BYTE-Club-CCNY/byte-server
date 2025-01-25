@@ -54,7 +54,9 @@ func EditCohortDraft(c *fiber.Ctx) error {
 			"error":   err.Error(),
 		})
 	}*/
-	return c.SendStatus(fiber.StatusOK)
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Successfully updated draft",
+	})
 }
 
 /* Creates a new collection if it doesn't exist
@@ -107,4 +109,28 @@ func ViewDraft(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(draft)
+}
+
+func PublishDraft(c *fiber.Ctx) error {
+	var params Cohort
+
+	err := utils.Validate(c, &params)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	err = mongodb.CreateTemplate("cohort-" + params.Cohort_id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error Publishing Draft",
+			"error":   err.Error(),
+		})
+	}
+
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Successfully published draft",
+	})
 }
