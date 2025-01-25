@@ -71,7 +71,7 @@ func get(c *fiber.Ctx) error {
 		Joins("LEFT JOIN users.people u4 ON t.member4 = u4.uid").
 		Joins("INNER JOIN users.cohort c ON p.cohort_id = c.cohort_id").
 		Order("p.cohort_id DESC").
-		Order("p.cohort_id DESC")
+		Order("p.name ASC")
 
 
 	if params.Cohort != -1 {
