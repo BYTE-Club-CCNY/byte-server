@@ -6,6 +6,21 @@ import (
 
 func TestInitRedis(t *testing.T) {
     InitRedis()
+}
 
-    AddToCache("string", "string", 0) // write tests
+func TestAddToCache(t *testing.T) {
+    InitRedis()
+    err := AddToCache("key", "value", 60 * 1000 *1000 *1000)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    value, err := GetCache("key")
+
+    if err != nil || value != "value" {
+        panic("Unable to get cached value!")
+    }
+
+    ClearCache()
 }
