@@ -26,7 +26,7 @@ func EditDraft(data utils.EditDraft) error {
 func CreateDraft(Cohort_id string) error {
 	indexModel := mongo.IndexModel{
         Keys: bson.D{{"docType", 1}}, 
-        Options: options.Index().SetPartialFilterExpression(bson.D{
+        Options: options.Index().SetName("draft").SetPartialFilterExpression(bson.D{
             {"docType", "draft"}, 
         }).SetUnique(true),
     }
