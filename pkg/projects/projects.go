@@ -5,8 +5,10 @@ import (
 	"byteserver/pkg/redis"
 	schema "byteserver/pkg/schemas"
 	"byteserver/pkg/utils"
+	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -88,6 +90,13 @@ func get(c *fiber.Ctx) error {
 			"error": query.Error.Error(),
 		})
 	}
+
+
+	// caching get/ request (could be abstracted but its mad work)
+	key, _ := json.Marshal(c.AllParams())
+	value, _ := json.Marshal(projects)
+	var duration time.Duration = 3 * 1e14
+	redis.AddToCache(string(key), string(value), duration)
 
 	return c.Status(fiber.StatusOK).JSON(projects);
 }
