@@ -62,6 +62,7 @@ func NewCohort(c *fiber.Ctx) error {
 	err := utils.Validate(c, cohort)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
+			"message": "Error with validating inputs",
 			"error": err.Error(),
 		})
 	}

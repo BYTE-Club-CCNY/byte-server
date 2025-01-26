@@ -59,7 +59,7 @@ func EditCohortDraft(c *fiber.Ctx) error {
 	})
 }
 
-/* Creates a new collection if it doesn't exist
+/* Creates a new collection if it doesn't exist, and a draft document
  Example: /create-draft
  Body: {
 	cohort_id: "1"
@@ -70,6 +70,7 @@ func CreateDraft(c *fiber.Ctx) error {
 	err := utils.Validate(c, &params)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
+			"message": "Error with validating inputs",
 			"error": err.Error(),
 		})
 	}
@@ -117,6 +118,7 @@ func PublishDraft(c *fiber.Ctx) error {
 	err := utils.Validate(c, &params)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
+			"message": "Error with validating inputs",
 			"error": err.Error(),
 		})
 	}
