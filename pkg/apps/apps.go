@@ -30,7 +30,7 @@ func App() *fiber.App {
 
 	app.Post("/submit-app", SubmitApp) 
 
-	//app.Post("/save-app-draft") // save draft only if app is not submitted
+	app.Post("/save-app-draft", SaveApp) // save draft only if app is not submitted
 
 	//app.Get("/view") // get existing application(s) query by id and page
 
