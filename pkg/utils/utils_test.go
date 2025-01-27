@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +11,21 @@ import (
 )
 
 func TestInitEnv(t *testing.T) {
-	err := InitEnv()
+	file, err := os.Create(".env")
+	if err != nil {
+		panic("Failed to create .env file for testing")
+	}
+    defer file.Close()
+
+	var testInput string = "KEY=VALUE";
+    buf := []byte(testInput)
+
+	_, err = file.Write(buf)
+	if err != nil {
+		panic("Could not write to .env file")
+	}
+
+	err = InitEnv()
 
 	if err != nil {
 		panic(err)
