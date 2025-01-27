@@ -3,6 +3,7 @@ bun.lockb
 *.pem
 cert/
 *.nix
+*.rdb
 
 # Logs
 logs

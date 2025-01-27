@@ -7,9 +7,9 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=ec2-user
-ExecStart=/home/ec2-user/byte-server/app
-WorkingDirectory=/home/ec2-user/byte-server
+User=byte
+ExecStart=/home/byte/byte-server/app
+WorkingDirectory=/home/byte/byte-server
 
 [Install]
 WantedBy=multi-user.target
