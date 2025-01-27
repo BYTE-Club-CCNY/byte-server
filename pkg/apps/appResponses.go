@@ -1,10 +1,12 @@
 package apps
 
 import (
+	mongodb "byteserver/pkg/mongo"
+	_ "byteserver/pkg/utils"
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
-	_"byteserver/pkg/utils"
-	mongodb "byteserver/pkg/mongo"
 )
 
 /*
@@ -58,4 +60,34 @@ func SaveApp(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message": "Successfully created/updated application",
 	})
+}
+
+func ViewApps(c *fiber.Ctx) error {
+	cohort_id := c.Query("cohort_id")
+	pages, err := strconv.Atoi(c.Query("pages", "1"))
+	limit, err := strconv.Atoi(c.Query("limit", "10"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Expected Int for pages",
+		})
+	}
+
+
+	if cohort_id == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Missing required parameter: cohort_id",
+		})
+	}
+
+	collectionName := "cohort-" + cohort_id
+
+	docs, err := mongodb.GetApps(collectionName, pages, limit) 
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Error getting application documents",
+			"error" : err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(docs)
 }
