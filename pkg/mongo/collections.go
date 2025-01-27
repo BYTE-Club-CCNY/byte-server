@@ -14,7 +14,7 @@ func CreateNewCohort(ctx context.Context, cohort string) error {
 	}
 
 	if err := DB.CreateCollection(ctx, cohort); err != nil {
-		log.Printf("failed to create collection '%s': %w", cohort, err)
+		log.Printf("failed to create collection '%s': %s", cohort, err.Error())
 		return fmt.Errorf("failed to create collection '%s': %w", cohort, err)
 	}
 
