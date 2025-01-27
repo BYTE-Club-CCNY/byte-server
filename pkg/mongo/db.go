@@ -12,16 +12,14 @@ import (
 var DB *mongo.Database
 
 func Connect() error {
-	err := utils.InitEnv()
+	utils.InitEnv()
 
-	if err != nil {
-		panic(".env file missing!")
-	}
-	
 	uri, err := utils.GetEnv("MONGO_URI")
 	if err != nil {
-		panic("MONGO_URI value missing")
+		return err
 	}
+
+	fmt.Println(uri)
 
 	clientOptions := options.Client().ApplyURI(uri)
 
@@ -42,7 +40,7 @@ func Connect() error {
 	validationDoc := bson.D{{Key: "validation", Value: "test"}}
 	_, err = collection.InsertOne(context.Background(), validationDoc)
 	if err != nil {
-		fmt.Printf("Failed to validate collection 'sample': %v", err)
+		return err
 	}
 
 	fmt.Printf("%s initialized", DB.Name())

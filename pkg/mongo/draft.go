@@ -35,10 +35,6 @@ func CreateDraft(collectionName string) error {
         }).SetUnique(true),
     }
 
-	if exists, _ := CheckCollectionExists(collectionName); !exists {
-		return fmt.Errorf("Collection %s does not exist", collectionName)
-	}
-
 	collection := DB.Collection(collectionName)
 
 	_, err := collection.Indexes().CreateOne(context.TODO(), indexModel) 
@@ -59,9 +55,11 @@ func CreateDraft(collectionName string) error {
 
 func ViewDraft(collectionName string) (bson.M, error) {
 	var result bson.M
+	
 	if exists, _ := CheckCollectionExists(collectionName); !exists {
 		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
 	}
+	
 	collection := DB.Collection(collectionName)
 	err := collection.FindOne(context.TODO(), bson.D{{"docType", "draft"}}).Decode(&result)
 	if err != nil {
