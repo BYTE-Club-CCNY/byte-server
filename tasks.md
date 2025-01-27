@@ -8,14 +8,8 @@
   - [x] View draft endpoint
   - [x] Publish draft endpoint
 - [ ] Cohort Applications 
-  - [ ] Submit application
-  - [ ] Save user's application as draft before submitting
-  - [ ] Retrieve all user applications that are completed
-    - [ ] Implement Pagination
-
-## Brainstorm
-> I think we should just have one collection for every semester, and then every document would have a "documentType" which would let us separate applications, draft, and voting.
-- What does a draft need?
-  - you can have arbritrary amount of questions
-  - documentType 
-  - deadline
+  - [x] Submit application
+  - [x] Save user's application as draft before submitting
+  - [x] Retrieve all user applications that are completed
+    - [x] Implement Pagination
+- [ ] Deploy MongoDB 
