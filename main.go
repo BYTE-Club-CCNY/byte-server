@@ -6,13 +6,9 @@ import (
 	"byteserver/pkg/projects"
 	"byteserver/pkg/redis"
 	"byteserver/pkg/users"
-	"byteserver/pkg/utils"
-
 	"byteserver/pkg/mongo"
-
 	"encoding/json"
 	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -20,7 +16,7 @@ import (
 func main() {	
 	port := ":3000"
 	app := fiber.New()
-	utils.IshmamLoadEnv()
+
 	database.InitDB()
 	redis.InitRedis()
 	mongodb.Connect()

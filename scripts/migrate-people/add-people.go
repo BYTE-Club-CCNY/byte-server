@@ -10,7 +10,7 @@ import (
 )
 
 func main () {
-	utils.IshmamLoadEnv()
+	utils.InitEnv()
 	database.InitDB()
 	fmt.Println("Database connection:", database.DB)
 	file, err := os.Open("./scripts/migrate-people/data.csv")
