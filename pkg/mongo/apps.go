@@ -1,9 +1,11 @@
 package mongodb
 
 import (
+	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"context"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func InsertJSON(collection *mongo.Collection, params bson.M) error {
@@ -23,7 +25,11 @@ func UpdateJSON(collection *mongo.Collection, params bson.M, filter bson.D) erro
 
 func UpdateOrInsertJSON (params bson.M, isSubmit bool) error {
 	cohort_id := params["cohort_id"].(string)
-	collection := DB.Collection("cohort-" + cohort_id)
+	collectionName := "cohort-" + cohort_id
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+	collection := DB.Collection(collectionName)
 	delete(params, "cohort_id")
 
 	if isSubmit {
@@ -40,4 +46,26 @@ func UpdateOrInsertJSON (params bson.M, isSubmit bool) error {
 	} else {
 		return InsertJSON(collection, params)
 	}
+}
+
+func GetApps(collectionName string, pages, limit int) ([]bson.M, error) {
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+	collection := DB.Collection(collectionName)
+	var result []bson.M
+	
+	filter := bson.D{{"submitted", true}}
+	skip := int64((pages - 1) * limit)
+	options := options.Find().SetLimit(int64(limit)).SetSkip(skip)
+	docs, err := collection.Find(context.TODO(), filter, options)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = docs.All(context.TODO(), &result); err != nil {
+		return nil, err
+	}
+	fmt.Println(result)
+	return result, nil
 }
