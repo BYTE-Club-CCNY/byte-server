@@ -75,7 +75,7 @@ func CreateDraft(c *fiber.Ctx) error {
 		})
 	}
 	 
-	err = mongodb.CreateDraft(params.Cohort_id)
+	err = mongodb.CreateDraft("cohort-" + params.Cohort_id)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Error Creating Draft",
