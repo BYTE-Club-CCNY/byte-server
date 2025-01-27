@@ -2,15 +2,18 @@ package mongodb
 
 import (
 	"context"
-
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func ViewTemplate(cohort_id string) (bson.M, error) {
+func ViewTemplate(collectionName string) (bson.M, error) {
 	var result bson.M
-	collection := DB.Collection(cohort_id)
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+	collection := DB.Collection(collectionName)
 	err := collection.FindOne(context.TODO(), bson.D{{"docType", "template"}}).Decode(&result)
 	if err != nil {
 		return nil, err
@@ -18,7 +21,7 @@ func ViewTemplate(cohort_id string) (bson.M, error) {
 	return result, nil
 }
 
-func CreateTemplate(cohort_id string) error {
+func CreateTemplate(collectionName string) error {
 	indexModel := mongo.IndexModel{
         Keys: bson.D{{"docType", 1}}, 
         Options: options.Index().SetName("template").SetPartialFilterExpression(bson.D{
@@ -26,7 +29,10 @@ func CreateTemplate(cohort_id string) error {
         }).SetUnique(true),
     }
 
-	collection := DB.Collection(cohort_id)
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+	collection := DB.Collection(collectionName)
 
 	_, err := collection.Indexes().CreateOne(context.TODO(), indexModel) 
 	if err != nil {

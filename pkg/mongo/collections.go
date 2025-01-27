@@ -22,6 +22,9 @@ func CreateNewCohort(ctx context.Context, cohort string) error {
 }
 
 func GetAllData(ctx context.Context, collectionName string) ([]bson.M, error) {
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
+	}
 	collection := DB.Collection(collectionName)
 	var result []bson.M
 	cursor, err := collection.Find(ctx, bson.D{})
