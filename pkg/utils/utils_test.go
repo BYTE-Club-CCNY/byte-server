@@ -56,11 +56,11 @@ func TestValidate(t *testing.T) {
 	}
 
 	var passed bool = false
-	passed = users.Name				==	"John Doe"
-	passed = users.CunyEmail		==	"john.doe@cuny.edu"
-	passed = users.PersonalEmail	==	"john.doe@gmail.com"
-    passed = users.Discord			==	"johndoe#1234"
-	passed = users.Emplid			==	"12345678"
+	passed = users.Name				==	"John Doe" &&
+			 users.CunyEmail		==	"john.doe@cuny.edu" &&
+			 users.PersonalEmail	==	"john.doe@gmail.com" && 
+			 users.Discord			==	"johndoe#1234" && 
+			 users.Emplid			==	"12345678"
 
 	if passed != true {
 		panic("variables did not save correctly")
