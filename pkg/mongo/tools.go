@@ -8,7 +8,7 @@ import (
 
 func CheckCollectionExists(searchCollection string) (bool, error) {
 	filter := bson.D{{"name", searchCollection}}
-	collectionNames, err := DB.ListCollectionNames(context.TODO(), filter)
+	collectionNames, err := MongoDB.ListCollectionNames(context.TODO(), filter)
 	if err != nil {
 		return false, err
 	}

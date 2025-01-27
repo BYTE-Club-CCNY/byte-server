@@ -14,7 +14,7 @@ func EditDraft(data utils.EditDraft) error {
 	if exists, _ := CheckCollectionExists(collectionName); !exists {
 		return fmt.Errorf("Collection %s does not exist", collectionName)
 	}
-	collection := DB.Collection(collectionName)
+	collection := MongoDB.Collection(collectionName)
 
 	filter := bson.D{{"docType", "draft"}}
 	addData := bson.D{{"deadline", data.Deadline}, {"questions", data.Questions}}
@@ -35,7 +35,7 @@ func CreateDraft(collectionName string) error {
         }).SetUnique(true),
     }
 
-	collection := DB.Collection(collectionName)
+	collection := MongoDB.Collection(collectionName)
 
 	_, err := collection.Indexes().CreateOne(context.TODO(), indexModel) 
 	if err != nil {
@@ -59,8 +59,8 @@ func ViewDraft(collectionName string) (bson.M, error) {
 	if exists, _ := CheckCollectionExists(collectionName); !exists {
 		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
 	}
-	
-	collection := DB.Collection(collectionName)
+
+	collection := MongoDB.Collection(collectionName)
 	err := collection.FindOne(context.TODO(), bson.D{{"docType", "draft"}}).Decode(&result)
 	if err != nil {
 		return nil, err

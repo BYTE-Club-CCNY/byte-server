@@ -29,7 +29,7 @@ func UpdateOrInsertJSON (params bson.M, isSubmit bool) error {
 	if exists, _ := CheckCollectionExists(collectionName); !exists {
 		return fmt.Errorf("Collection %s does not exist", collectionName)
 	}
-	collection := DB.Collection(collectionName)
+	collection := MongoDB.Collection(collectionName)
 	delete(params, "cohort_id")
 
 	if isSubmit {
@@ -52,7 +52,7 @@ func GetApps(collectionName string, pages, limit int) ([]bson.M, error) {
 	if exists, _ := CheckCollectionExists(collectionName); !exists {
 		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
 	}
-	collection := DB.Collection(collectionName)
+	collection := MongoDB.Collection(collectionName)
 	var result []bson.M
 	
 	filter := bson.D{{"submitted", true}}
