@@ -21,7 +21,7 @@ func main() {
 	port := ":3000"
 	app := fiber.New()
 	utils.IshmamLoadEnv()
-	database.InitDB()
+	// database.InitDB()
 	redis.InitRedis()
 	// mongodb.Connect()
 	
