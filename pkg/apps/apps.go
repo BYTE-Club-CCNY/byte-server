@@ -27,13 +27,12 @@ func App() *fiber.App {
 
 	/* saves application w/ userid (uuid same as the one in postgres) 
 	to mongo application collection */
-	/*
-	app.Post("/submit-app") 
 
-	app.Post("/save-app-draft") // save draft only if app is not submitted
+	app.Post("/submit-app", SubmitApp) 
 
-	app.Get("/view") // get existing application(s) query by id and page
-	*/
+	app.Post("/save-app-draft", SaveApp) // save draft only if app is not submitted
+
+	app.Get("/view", ViewApps) // get existing application(s) query by id and page
 
 	return app
 }

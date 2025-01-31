@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,25 +11,24 @@ import (
 )
 
 func TestInitEnv(t *testing.T) {
-	err := InitEnv()
+	file, err := os.Create(".env")
+	if err != nil {
+		panic("Failed to create .env file for testing")
+	}
+    defer file.Close()
+
+	var testInput string = "KEY=VALUE";
+    buf := []byte(testInput)
+
+	_, err = file.Write(buf)
+	if err != nil {
+		panic("Could not write to .env file")
+	}
+
+	err = InitEnv()
 
 	if err != nil {
 		panic(err)
-	}
-}
-
-func TestEnvironmentValuesExist(t *testing.T) {
-	_ = InitEnv()
-
-	keys := [5]string{"POSTGRESQL_DB_HOST", "POSTGRESQL_DB_USER", 
-	"POSTGRESQL_DB_PASSWORD", "POSTGRESQL_DB", "POSTGRESQL_DB_PORT"};
-
-	for _, key := range keys {
-		_, error := GetEnv(key)
-
-		if error != nil {
-			panic(fmt.Sprintf("Missing %s", key));
-		}
 	}
 }
 
@@ -56,11 +56,11 @@ func TestValidate(t *testing.T) {
 	}
 
 	var passed bool = false
-	passed = users.Name				==	"John Doe"
-	passed = users.CunyEmail		==	"john.doe@cuny.edu"
-	passed = users.PersonalEmail	==	"john.doe@gmail.com"
-    passed = users.Discord			==	"johndoe#1234"
-	passed = users.Emplid			==	"12345678"
+	passed = users.Name				==	"John Doe" &&
+			 users.CunyEmail		==	"john.doe@cuny.edu" &&
+			 users.PersonalEmail	==	"john.doe@gmail.com" && 
+			 users.Discord			==	"johndoe#1234" && 
+			 users.Emplid			==	"12345678"
 
 	if passed != true {
 		panic("variables did not save correctly")

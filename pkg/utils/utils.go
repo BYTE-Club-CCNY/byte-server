@@ -9,17 +9,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
 )
-
-// Fahad don't delete this please :))
-func IshmamLoadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-	  fmt.Println("Error loading .env file")
-	  panic(err)
-	}
-}
 
 func InitEnv() error {
     file, err := os.Open(".env")

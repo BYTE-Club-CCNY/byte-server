@@ -6,11 +6,15 @@ import (
     "go.mongodb.org/mongo-driver/mongo/options"
 	"byteserver/pkg/utils"
 	"context"
+	"fmt"
 )
 
 func EditDraft(data utils.EditDraft) error {
-	cohort := "cohort-" + data.Cohort_id
-	collection := DB.Collection(cohort)
+	collectionName := "cohort-" + data.Cohort_id
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+	collection := MongoDB.Collection(collectionName)
 
 	filter := bson.D{{"docType", "draft"}}
 	addData := bson.D{{"deadline", data.Deadline}, {"questions", data.Questions}}
@@ -23,7 +27,7 @@ func EditDraft(data utils.EditDraft) error {
 	return nil
 }
 
-func CreateDraft(Cohort_id string) error {
+func CreateDraft(collectionName string) error {
 	indexModel := mongo.IndexModel{
         Keys: bson.D{{"docType", 1}}, 
         Options: options.Index().SetName("draft").SetPartialFilterExpression(bson.D{
@@ -31,8 +35,7 @@ func CreateDraft(Cohort_id string) error {
         }).SetUnique(true),
     }
 
-	cohort := "cohort-" + Cohort_id
-	collection := DB.Collection(cohort)
+	collection := MongoDB.Collection(collectionName)
 
 	_, err := collection.Indexes().CreateOne(context.TODO(), indexModel) 
 	if err != nil {
@@ -50,9 +53,14 @@ func CreateDraft(Cohort_id string) error {
 	return nil
 }
 
-func ViewDraft(Cohort_id string) (bson.M, error) {
+func ViewDraft(collectionName string) (bson.M, error) {
 	var result bson.M
-	collection := DB.Collection(Cohort_id)
+	
+	if exists, _ := CheckCollectionExists(collectionName); !exists {
+		return nil, fmt.Errorf("Collection %s does not exist", collectionName)
+	}
+
+	collection := MongoDB.Collection(collectionName)
 	err := collection.FindOne(context.TODO(), bson.D{{"docType", "draft"}}).Decode(&result)
 	if err != nil {
 		return nil, err

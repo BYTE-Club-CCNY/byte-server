@@ -2,14 +2,10 @@ package main
 
 import (
 	"byteserver/pkg/apps"
-	"byteserver/pkg/database"
+	mongodb "byteserver/pkg/mongo"
 	"byteserver/pkg/projects"
 	"byteserver/pkg/redis"
 	"byteserver/pkg/users"
-	"byteserver/pkg/utils"
-
-	// "byteserver/pkg/mongo"
-
 	"encoding/json"
 	"fmt"
 
@@ -20,10 +16,10 @@ import (
 func main() {	
 	port := ":3000"
 	app := fiber.New()
-	utils.IshmamLoadEnv()
+	
 	// database.InitDB()
 	redis.InitRedis()
-	// mongodb.Connect()
+	mongodb.Connect()
 	
 	app.Use(cors.New())
 	
@@ -52,8 +48,6 @@ func main() {
 		return c.Next()
 	})
 
-	
-
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("BYTE Server is running!")
 	})
@@ -61,5 +55,5 @@ func main() {
 	app.Mount("/apps", apps.App())
 	app.Mount("/user", users.Users())
 
-	app.Listen(port)
+	app.Listen("localhost" + port)
 }

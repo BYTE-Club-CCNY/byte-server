@@ -6,6 +6,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// Retrieves data of the template document which has questions, and deadline of 
+// a given cohort
 func ViewTemplate(c *fiber.Ctx) error {
 	cohort_id := c.Query("cohort_id")
 

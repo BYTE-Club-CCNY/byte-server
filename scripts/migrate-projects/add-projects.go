@@ -30,7 +30,7 @@ type JsonData struct {
 }
 
 func main () {
-	utils.IshmamLoadEnv()
+	utils.InitEnv()
 	database.InitDB()
 	jsonFile, err := os.Open("./scripts/migrate-projects/data.json")
 	if err != nil {
