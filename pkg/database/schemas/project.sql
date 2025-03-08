@@ -1,7 +1,7 @@
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table if not exists projects.project (
-	id UUID PRIMARY KEY NOT NULL,
+	uuid UUID PRIMARY KEY NOT NULL,
 	name varchar(255),
 	short_desc varchar(1000),
 	long_desc varchar(1000),

@@ -1,5 +1,5 @@
 create table if not exists users.people (
-    uid UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
+    uuid UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     active boolean NOT NULL DEFAULT true,
     first_name varchar(255) NOT NULL,
     middle_name varchar(255),
