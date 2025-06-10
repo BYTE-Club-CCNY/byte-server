@@ -2,7 +2,7 @@ package main
 
 import (
 	"byteserver/pkg/apps"
-	mongodb "byteserver/pkg/mongo"
+	"byteserver/pkg/database"
 	"byteserver/pkg/projects"
 	"byteserver/pkg/redis"
 	"byteserver/pkg/users"
@@ -14,12 +14,12 @@ import (
 )
 
 func main() {	
-	port := ":3000"
+	port := ":10000" // default for render
 	app := fiber.New()
 	
-	// database.InitDB()
-	redis.InitRedis()
-	mongodb.Connect()
+	database.InitDB()
+	// redis.InitRedis()
+	// mongodb.Connect()
 	
 	app.Use(cors.New())
 	
@@ -55,5 +55,5 @@ func main() {
 	app.Mount("/apps", apps.App())
 	app.Mount("/user", users.Users())
 
-	app.Listen("localhost" + port)
+	app.Listen("0.0.0.0" + port)
 }
