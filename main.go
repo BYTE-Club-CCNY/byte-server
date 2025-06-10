@@ -28,25 +28,25 @@ func main() {
 		return c.Next()
 	})
 
-	app.Use(func(c *fiber.Ctx) error {
-		if c.Method() != "GET" {
-			return c.Next()
-		}
+	// app.Use(func(c *fiber.Ctx) error {
+	// 	if c.Method() != "GET" {
+	// 		return c.Next()
+	// 	}
 
-		key, _ := json.Marshal(c.AllParams())
+	// 	key, _ := json.Marshal(c.AllParams())
 
-		if value, err := redis.GetCache(string(key)); err == nil {
-			var returnVal any;
+	// 	if value, err := redis.GetCache(string(key)); err == nil {
+	// 		var returnVal any;
 
-			err := json.Unmarshal([]byte(value), &returnVal)
-			if err != nil {
-				return c.Next()
-			}
+	// 		err := json.Unmarshal([]byte(value), &returnVal)
+	// 		if err != nil {
+	// 			return c.Next()
+	// 		}
 
-			return c.Status(fiber.StatusOK).JSON(returnVal)
-		}
-		return c.Next()
-	})
+	// 		return c.Status(fiber.StatusOK).JSON(returnVal)
+	// 	}
+	// 	return c.Next()
+	// })
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("BYTE Server is running!")
