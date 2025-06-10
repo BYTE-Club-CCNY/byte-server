@@ -2,13 +2,11 @@ package projects
 
 import (
 	"byteserver/pkg/database"
-	"byteserver/pkg/redis"
+	// "byteserver/pkg/redis"
 	schema "byteserver/pkg/schemas"
 	"byteserver/pkg/utils"
-	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -93,10 +91,10 @@ func get(c *fiber.Ctx) error {
 
 
 	// caching get/ request (could be abstracted but its mad work)
-	key, _ := json.Marshal(c.AllParams())
-	value, _ := json.Marshal(projects)
-	var duration time.Duration = 3 * 1e14
-	redis.AddToCache(string(key), string(value), duration)
+	// key, _ := json.Marshal(c.AllParams())
+	// value, _ := json.Marshal(projects)
+	// var duration time.Duration = 3 * 1e14
+	// redis.AddToCache(string(key), string(value), duration)
 
 	return c.Status(fiber.StatusOK).JSON(projects);
 }
@@ -146,7 +144,7 @@ func add(c *fiber.Ctx) error {
 	project.Image = params.Image
 
 	database.DB.Create(project)
-	redis.ClearCache()
+	// redis.ClearCache()
 
 	return c.SendStatus(fiber.StatusOK)
 }
