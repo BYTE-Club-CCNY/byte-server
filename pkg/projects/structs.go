@@ -1,12 +1,25 @@
 package projects
 
-import "github.com/google/uuid"
+import (
+	"byteserver/pkg/database/gorm"
+
+	"github.com/google/uuid"
+)
 
 type GetProjectsBody struct {
 	Cohort 		int
 	Name 		string
 	N_records 	int
 	Page 		int
+}
+
+type getProjectsReturn struct {
+	gorm.Project
+	Member1		string	`gorm:"column:member1;type:text"`
+	Member2 	string	`gorm:"column:member2;type:text"`
+	Member3		string	`gorm:"column:member3;type:text"`
+	Member4		string	`gorm:"column:member4;type:text"`
+	Cohort		string	`gorm:"column:cohort;type:text"`
 }
 
 type AddProjectsBody struct {
