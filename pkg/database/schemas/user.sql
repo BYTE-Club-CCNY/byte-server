@@ -1,4 +1,4 @@
-create table if not exists users.people (
+create table if not exists users.user (
     uuid UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
     active boolean NOT NULL DEFAULT true,
     first_name varchar(255) NOT NULL,
@@ -8,4 +8,4 @@ create table if not exists users.people (
     cuny_email varchar(255),
     discord varchar(255),
     emplid varchar(255) NOT NULL
-)
+);

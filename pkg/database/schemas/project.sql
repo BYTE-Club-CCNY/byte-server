@@ -1,14 +1,13 @@
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table if not exists projects.project (
-	uuid UUID PRIMARY KEY NOT NULL,
+	uuid UUID PRIMARY KEY NOT NULL REFERENCES projects.team(uuid) ON DELETE SET NULL,
 	name varchar(255),
 	short_desc varchar(1000),
 	long_desc varchar(1000),
-	link varchar(255),
+	github varchar(255),
 	image varchar(255),
 	tech_stack text[],
 	topic text[],
-	cohort_id int not null,
-	CONSTRAINT fk_id FOREIGN KEY (id) REFERENCES projects.teams(id) 
-)
+	cohort_id int NOT NULL REFERENCES users.cohort(cohort_id)
+);
